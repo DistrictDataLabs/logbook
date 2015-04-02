@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/DistrictDataLabs/logbook.png?label=ready&title=Ready)](https://waffle.io/DistrictDataLabs/logbook)
 # LogBook
 
 **A simple web application for activity tracking and event aggregation.**
