@@ -1,0 +1,31 @@
+language: python
+python:
+  - '2.7'
+
+install: pip install -r requirements.txt
+
+before_script:
+  - psql -c 'create database logbook;' -U postgres
+
+script: make test
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE=logbook.settings.testing
+    - SECRET_KEY=supersecretkey
+    - DB_NAME=logbook
+    - DB_USER=postgres
+    - DB_PASS=''
+    - DB_HOST=localhost
+    - DB_PORT=5432
+    - EMAIL_HOST_PASSWORD=''
+    - GOOGLE_OAUTH2_KEY=''
+    - GOOGLE_OAUTH2_SECRET=''
+
+notifications:
+  email:
+    recipients:
+      - bbengfort@districtdatalabs.com
+      - tojeda@districtdatalabs.com
+    on_success: change
+    on_failure: always
