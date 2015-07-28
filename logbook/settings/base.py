@@ -48,8 +48,8 @@ def environ_setting(name, default=None):
 ## Build Paths inside of project with os.path.join
 ##########################################################################
 
-BASE_DIR    = os.path.dirname(os.path.dirname(__file__))
-PROJECT_DIR = os.path.normpath(os.path.join(BASE_DIR, os.pardir))
+PROJECT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+REPOSITORY = os.path.dirname(PROJECT)
 
 ##########################################################################
 ## Secret settings - do not store!
@@ -84,7 +84,7 @@ DEBUG          = True
 TEMPLATE_DEBUG = True
 
 ## Hosts
-ALLOWED_HOSTS  = []
+ALLOWED_HOSTS  = ["*"]
 INTERNAL_IPS   = ('127.0.0.1', '198.168.1.10')
 
 ## WSGI Configuration
@@ -105,6 +105,8 @@ INSTALLED_APPS = (
     # Third party apps
     # 'social.apps.django_app.default',
     # 'rest_framework',
+    'storages',
+    'django_gravatar',
 
     # LogBook apps
 )
@@ -123,7 +125,7 @@ MIDDLEWARE_CLASSES = (
 ## Internationalization
 ## https://docs.djangoproject.com/en/1.7/topics/i18n/
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE     = 'UTC'
+TIME_ZONE     = 'America/New_York'
 USE_I18N      = True
 USE_L10N      = True
 USE_TZ        = True
@@ -135,27 +137,36 @@ GRAPPELLI_ADMIN_TITLE = "LogBook Admin"
 ## Content (Static, Media, Templates)
 ##########################################################################
 
-## Static files (CSS, JavaScript, Images)
-## https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL          = '/static/'
 
-STATICFILES_DIRS    = (
-    os.path.join(PROJECT_DIR, 'static'),
+## Templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT, 'templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                # 'social.apps.django_app.context_processors.backends',
+            ],
+        },
+    },
+]
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+STATIC_URL = '/assets/'
+
+STATICFILES_DIRS = (
+    os.path.join(PROJECT, 'assets'),
 )
-
-## Template Files.
-TEMPLATE_DIRS       = (
-    os.path.join(PROJECT_DIR, 'templates'),
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-)
-
-## Uploaded Media
-MEDIA_URL           = "/media/"
 
 ##########################################################################
 ## Logging and Error Reporting
