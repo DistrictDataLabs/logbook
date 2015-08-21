@@ -177,10 +177,10 @@ ADMINS          = (
     ('Tony Ojeda', 'tojeda@districtdatalabs.com'),
 )
 
-SERVER_EMAIL    = 'Dakota <server@bengfort.com>'
+SERVER_EMAIL    = 'DDL Admin <admin@districtdatalabs.com>'
 EMAIL_USE_TLS   = True
 EMAIL_HOST      = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'server@bengfort.com'
+EMAIL_HOST_USER      = environ_setting("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD  = environ_setting("EMAIL_HOST_PASSWORD")
 EMAIL_PORT      = 587
 EMAIL_SUBJECT_PREFIX = '[LOGBOOK] '
