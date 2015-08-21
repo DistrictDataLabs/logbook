@@ -81,7 +81,6 @@ DATABASES = {
 ## Debugging settings
 ## SECURITY WARNING: don't run with debug turned on in production!
 DEBUG          = True
-TEMPLATE_DEBUG = True
 
 ## Hosts
 ALLOWED_HOSTS  = ["*"]
@@ -136,7 +135,6 @@ GRAPPELLI_ADMIN_TITLE = "LogBook Admin"
 ##########################################################################
 ## Content (Static, Media, Templates)
 ##########################################################################
-
 
 ## Templates
 TEMPLATES = [

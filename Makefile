@@ -42,11 +42,11 @@ showenv:
 
 # Show help for Django
 djangohelp:
-	$(PYTHON_BIN)/django-admin.py help $(DJANGO_LOCAL_POSTFIX)
+	$(LOCALPATH)/manage.py help $(DJANGO_LOCAL_POSTFIX)
 
 # Run the development server
 runserver:
-	$(PYTHON_BIN)/django-admin.py runserver $(DJANGO_LOCAL_POSTFIX)
+	$(LOCALPATH)/manage.py runserver $(DJANGO_LOCAL_POSTFIX)
 
 # Clean build files
 clean:

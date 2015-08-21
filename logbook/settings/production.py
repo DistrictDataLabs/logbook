@@ -26,7 +26,6 @@ from .base import *
 
 ## Debugging Settings
 DEBUG            = False
-TEMPLATE_DEBUG   = False
 
 ## Hosts
 ALLOWED_HOSTS    = ['logbook.districtdatalabs.com']
