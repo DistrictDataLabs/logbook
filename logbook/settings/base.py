@@ -102,7 +102,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # Third party apps
-    # 'social.apps.django_app.default',
+    'social.apps.django_app.default',
     # 'rest_framework',
     'storages',
     'django_gravatar',
@@ -119,6 +119,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 )
 
 ## Internationalization
@@ -150,7 +152,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # 'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.backends',
             ],
         },
     },
@@ -183,18 +185,41 @@ EMAIL_HOST_PASSWORD  = environ_setting("EMAIL_HOST_PASSWORD")
 EMAIL_PORT      = 587
 EMAIL_SUBJECT_PREFIX = '[LOGBOOK] '
 
+
 ##########################################################################
-## Authentication
+## Gravatar Configuration
 ##########################################################################
 
-LOGIN_URL = '/login/google-oauth2/'
-LOGIN_REDIRECT_URL = '/app'
+GRAVATAR_DEFAULT_SIZE   = 128
+GRAVATAR_DEFAULT_IMAGE  = 'mm'
+GRAVATAR_DEFAULT_RATING = 'r'
 
+##########################################################################
+## Social Authentication
+##########################################################################
+
+## Support for Social Auth authentication backends
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-## Google OAuth2 Credentials
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY    = environ_setting("GOOGLE_OAUTH2_KEY")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = environ_setting("GOOGLE_OAUTH2_SECRET")
+## Social authentication strategy
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+
+## Google-specific authentication keys
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = environ_setting("GOOGLE_OAUTH2_CLIENT_ID", "")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = environ_setting("GOOGLE_OAUTH2_CLIENT_SECRET", "")
+
+## Domain whitelist
+SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = [
+    'districtdatalabs.com',
+]
+
+LOGIN_REDIRECT_URL = "home"
+
+## Error handling
+SOCIAL_AUTH_LOGIN_ERROR_URL = "login"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False

@@ -6,7 +6,7 @@ body {
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 76px;
 }
 
 /* Wrapper for page content to push down footer */
@@ -14,20 +14,25 @@ body {
   min-height: 100%;
   height: auto;
   /* Negative indent footer by its height */
-  margin: 0 auto -106px;
+  margin: 0 auto -76px;
   /* Pad bottom by footer height */
-  padding: 0 0 106px;
+  padding: 0 0 76px;
 }
 
 /* Set the fixed height of the footer here */
 #footer {
     background-color: #fff;
     border-top: 1px solid #eee;
-    height: 106px;
+    height: 76;
     padding: 30px 15px;
     font-size: 16px;
 }
 
 #footer p {
     margin: 0;
+}
+
+.navbar .profile-image{
+    margin: -10px 4px;
+    height: 30px;
 }
