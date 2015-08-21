@@ -1,2 +1,1 @@
-web: gunicorn pelawak.wsgi --log-file -
-websock: python server.py
+web: gunicorn logbook.wsgi --log-file -
