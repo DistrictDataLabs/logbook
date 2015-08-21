@@ -26,11 +26,9 @@ from .base import *
 
 ## Debugging Settings
 DEBUG            = False
-TEMPLATE_DEBUG   = False
 
 ## Hosts
-ALLOWED_HOSTS    = ['logbook.districtdatalabs.com']
+ALLOWED_HOSTS    = ['ddl-logbook.herokuapp.com', 'logbook.districtdatalabs.com']
 
-## Static files served by Nginx
-STATIC_ROOT = '/var/www/logbook/static'
-MEDIA_ROOT  = '/var/www/logbook/media'
+## Static files served by WhiteNoise
+STATIC_ROOT = 'staticfiles'

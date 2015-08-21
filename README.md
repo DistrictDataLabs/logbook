@@ -1,6 +1,8 @@
 # LogBook
 
-[![Build Status][travis_img]][travis_href] [![Stories in Ready][waffle_img]][waffle_href]
+[![Build Status][travis_img]][travis_href]
+[![Coverage Status][coveralls_img]][coverals_href]
+[![Stories in Ready][waffle_img]][waffle_href]
 
 **A simple web application for activity tracking and event aggregation.**
 
@@ -47,6 +49,8 @@ The image used in this README, ["Whaling Log Book"][whale_log.jpg] by [the Provi
 <!-- References -->
 [travis_img]: https://travis-ci.org/DistrictDataLabs/logbook.svg
 [travis_href]: https://travis-ci.org/DistrictDataLabs/logbook
+[coveralls_img]: https://coveralls.io/repos/DistrictDataLabs/logbook/badge.svg?branch=master&service=github
+[coverals_href]: https://coveralls.io/github/DistrictDataLabs/logbook?branch=master
 [waffle_img]: https://badge.waffle.io/DistrictDataLabs/logbook.png?label=ready&title=Ready
 [waffle_href]: https://waffle.io/DistrictDataLabs/logbook
 [whale_log.jpg]: https://flic.kr/p/7aBnY8

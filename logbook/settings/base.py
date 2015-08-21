@@ -24,6 +24,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 ##########################################################################
 
 import os
+import dj_database_url
 
 from django.conf import global_settings
 
@@ -48,8 +49,8 @@ def environ_setting(name, default=None):
 ## Build Paths inside of project with os.path.join
 ##########################################################################
 
-BASE_DIR    = os.path.dirname(os.path.dirname(__file__))
-PROJECT_DIR = os.path.normpath(os.path.join(BASE_DIR, os.pardir))
+PROJECT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+REPOSITORY = os.path.dirname(PROJECT)
 
 ##########################################################################
 ## Secret settings - do not store!
@@ -62,17 +63,14 @@ SECRET_KEY = environ_setting("SECRET_KEY")
 ## Database Settings
 ##########################################################################
 
-## See https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': environ_setting('DB_NAME', 'logbook'),
-        'USER': environ_setting('DB_USER', 'django'),
-        'PASSWORD': environ_setting('DB_PASS', ''),
-        'HOST': environ_setting('DB_HOST', 'localhost'),
-        'PORT': environ_setting('DB_PORT', '5432'),
-    },
+    'default': dj_database_url.config(),
 }
+
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 ##########################################################################
 ## Runtime settings
@@ -81,10 +79,12 @@ DATABASES = {
 ## Debugging settings
 ## SECURITY WARNING: don't run with debug turned on in production!
 DEBUG          = True
-TEMPLATE_DEBUG = True
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ## Hosts
-ALLOWED_HOSTS  = []
+ALLOWED_HOSTS  = ["*"]
 INTERNAL_IPS   = ('127.0.0.1', '198.168.1.10')
 
 ## WSGI Configuration
@@ -103,8 +103,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # Third party apps
-    # 'social.apps.django_app.default',
+    'social.apps.django_app.default',
     # 'rest_framework',
+    'storages',
+    'django_gravatar',
 
     # LogBook apps
 )
@@ -118,12 +120,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 )
 
 ## Internationalization
 ## https://docs.djangoproject.com/en/1.7/topics/i18n/
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE     = 'UTC'
+TIME_ZONE     = 'America/New_York'
 USE_I18N      = True
 USE_L10N      = True
 USE_TZ        = True
@@ -135,27 +139,40 @@ GRAPPELLI_ADMIN_TITLE = "LogBook Admin"
 ## Content (Static, Media, Templates)
 ##########################################################################
 
-## Static files (CSS, JavaScript, Images)
-## https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL          = '/static/'
+## Templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT, 'templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+            ],
+        },
+    },
+]
 
-STATICFILES_DIRS    = (
-    os.path.join(PROJECT_DIR, 'static'),
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+STATIC_URL = '/assets/'
+
+STATICFILES_DIRS = (
+    os.path.join(PROJECT, 'assets'),
 )
 
-## Template Files.
-TEMPLATE_DIRS       = (
-    os.path.join(PROJECT_DIR, 'templates'),
-)
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
 
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-)
-
-## Uploaded Media
-MEDIA_URL           = "/media/"
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 ##########################################################################
 ## Logging and Error Reporting
@@ -166,26 +183,49 @@ ADMINS          = (
     ('Tony Ojeda', 'tojeda@districtdatalabs.com'),
 )
 
-SERVER_EMAIL    = 'Dakota <server@bengfort.com>'
+SERVER_EMAIL    = 'DDL Admin <admin@districtdatalabs.com>'
 EMAIL_USE_TLS   = True
 EMAIL_HOST      = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'server@bengfort.com'
+EMAIL_HOST_USER      = environ_setting("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD  = environ_setting("EMAIL_HOST_PASSWORD")
 EMAIL_PORT      = 587
 EMAIL_SUBJECT_PREFIX = '[LOGBOOK] '
 
+
 ##########################################################################
-## Authentication
+## Gravatar Configuration
 ##########################################################################
 
-LOGIN_URL = '/login/google-oauth2/'
-LOGIN_REDIRECT_URL = '/app'
+GRAVATAR_DEFAULT_SIZE   = 128
+GRAVATAR_DEFAULT_IMAGE  = 'mm'
+GRAVATAR_DEFAULT_RATING = 'r'
 
+##########################################################################
+## Social Authentication
+##########################################################################
+
+## Support for Social Auth authentication backends
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-## Google OAuth2 Credentials
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY    = environ_setting("GOOGLE_OAUTH2_KEY")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = environ_setting("GOOGLE_OAUTH2_SECRET")
+## Social authentication strategy
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+
+## Google-specific authentication keys
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = environ_setting("GOOGLE_OAUTH2_CLIENT_ID", "")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = environ_setting("GOOGLE_OAUTH2_CLIENT_SECRET", "")
+
+## Domain whitelist
+SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = [
+    'districtdatalabs.com',
+]
+
+LOGIN_REDIRECT_URL = "home"
+
+## Error handling
+SOCIAL_AUTH_LOGIN_ERROR_URL = "login"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False

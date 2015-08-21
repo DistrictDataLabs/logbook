@@ -26,7 +26,6 @@ from .base import *
 
 ## Debugging Settings
 DEBUG            = True
-TEMPLATE_DEBUG   = True
 
 ## Hosts
 ALLOWED_HOSTS    = ['localhost', '127.0.0.1']
