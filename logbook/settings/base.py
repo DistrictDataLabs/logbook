@@ -24,6 +24,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 ##########################################################################
 
 import os
+import dj_database_url
 
 from django.conf import global_settings
 
@@ -62,17 +63,14 @@ SECRET_KEY = environ_setting("SECRET_KEY")
 ## Database Settings
 ##########################################################################
 
-## See https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': environ_setting('DB_NAME', 'logbook'),
-        'USER': environ_setting('DB_USER', 'django'),
-        'PASSWORD': environ_setting('DB_PASS', ''),
-        'HOST': environ_setting('DB_HOST', 'localhost'),
-        'PORT': environ_setting('DB_PORT', '5432'),
-    },
+    'default': dj_database_url.config(),
 }
+
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 ##########################################################################
 ## Runtime settings
@@ -81,6 +79,9 @@ DATABASES = {
 ## Debugging settings
 ## SECURITY WARNING: don't run with debug turned on in production!
 DEBUG          = True
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ## Hosts
 ALLOWED_HOSTS  = ["*"]
@@ -167,6 +168,11 @@ STATIC_URL = '/assets/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT, 'assets'),
 )
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 ##########################################################################
 ## Logging and Error Reporting

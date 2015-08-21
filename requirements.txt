@@ -7,7 +7,13 @@ django-gravatar2==1.3.0
 django-model-utils==2.3.1
 django-storages==1.1.8
 whitenoise==2.0.3
+gunicorn==19.3.0
+
+## Database Requirements
 psycopg2==2.6.1
+dj-database-url==0.3.0
+django-postgrespool==0.3.0
+SQLAlchemy==1.0.8
 
 ## Social Auth
 python-social-auth==0.2.12
