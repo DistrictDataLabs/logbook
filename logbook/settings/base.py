@@ -82,6 +82,9 @@ DATABASES = {
 ## SECURITY WARNING: don't run with debug turned on in production!
 DEBUG          = True
 
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 ## Hosts
 ALLOWED_HOSTS  = ["*"]
 INTERNAL_IPS   = ('127.0.0.1', '198.168.1.10')
@@ -167,6 +170,11 @@ STATIC_URL = '/assets/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT, 'assets'),
 )
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 ##########################################################################
 ## Logging and Error Reporting
