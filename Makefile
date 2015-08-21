@@ -59,4 +59,5 @@ clean:
 
 # Targets for Django testing
 test:
-	$(LOCALPATH)/manage.py test $(LOCALPATH) $(DJANGO_TEST_POSTFIX)
+	$(PYTHON_BIN)/coverage run --source=$(CURDIR) $(CURDIR)/manage.py test $(CURDIR) $(DJANGO_POSTFIX)
+	- $(PYTHON_BIN)/coverage report --omit="venv/*"
