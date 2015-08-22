@@ -18,9 +18,12 @@ Models that define how we describe DDL events in the database.
 ##########################################################################
 
 from django.db import models
+from model_utils import Choices
 from autoslug import AutoSlugField
+from markupfield.fields import MarkupField
 from model_utils.models import TimeStampedModel
 from logbook.utils import nullable, humanizedelta
+from django.core.urlresolvers import reverse
 
 ##########################################################################
 ## Event Base Class
@@ -35,6 +38,7 @@ class DDLEvent(TimeStampedModel):
     slug     = AutoSlugField(populate_from='name', unique=True)
     begins   = models.DateTimeField(**nullable)
     finishes = models.DateTimeField(**nullable)
+    details  =  MarkupField(markup_type='markdown', help_text='Edit in Markdown', **nullable)
 
     class Meta:
         abstract = True
@@ -72,8 +76,10 @@ class Course(DDLEvent):
     Note that longer events like Incubators and Research Labs are not this.
     """
 
-    details = models.TextField(help_text='Edit in Markdown', **nullable)
-    details_rendered = models.TextField(editable=False, **nullable)
+    TYPES  = Choices('workshop', 'webinar', 'lecture')
+
+    course_type = models.CharField(max_length=10, choices=TYPES, default=TYPES.workshop)
+    instructors = models.ManyToManyField('auth.User', through='catalog.Instructor', related_name='courses')
 
     class Meta:
         db_table = 'courses'
@@ -86,3 +92,18 @@ class Course(DDLEvent):
         Return the detail view of the Course object
         """
         return reverse('course', kwargs={'slug': self.slug})
+
+##########################################################################
+## Instructors
+##########################################################################
+
+class Instructor(TimeStampedModel):
+    """
+    A relationship between a user and a course that describes how they
+    instructed the course. Note this is similar to the members.Membership
+    relationship, but between courses and users, not profiles and roles.
+    """
+
+    course = models.ForeignKey('catalog.Course')
+    user   = models.ForeignKey('auth.User')
+    role   = models.ForeignKey('members.Role', related_name='+')

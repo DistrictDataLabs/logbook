@@ -1,27 +1,31 @@
-# catalog.signals
-# Signals for handling model events in the catalog app
+# members.apps
+# Describes the Members application for Django
 #
 # Author:   Benjamin Bengfort <bbengfort@districtdatalabs.com>
-# Created:  Fri Aug 21 17:06:20 2015 -0500
+# Created:  Sat Aug 22 10:41:24 2015 -0500
 #
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: signals.py [] benjamin@bengfort.com $
+# ID: apps.py [] benjamin@bengfort.com $
 
 """
-Signals for handling model events in the catalog app.
+Describes the Members application for Django
 """
 
 ##########################################################################
 ## Imports
 ##########################################################################
 
-from django.dispatch import receiver
-from django.db.models.signals import pre_save
-
-from catalog.models import Course
+from django.apps import AppConfig
 
 ##########################################################################
-## Course Signals
+## Members Config
 ##########################################################################
+
+class MembersConfig(AppConfig):
+    name = 'members'
+    verbose_name = "Member Profiles"
+
+    def ready(self):
+        import members.signals
