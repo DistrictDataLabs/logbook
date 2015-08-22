@@ -108,7 +108,8 @@ INSTALLED_APPS = (
     'storages',
     'django_gravatar',
 
-    # LogBook apps
+    # Logbook apps
+    'catalog',
 )
 
 ## Request Handling
