@@ -17,11 +17,24 @@ Application url definition and routers.
 ## Imports
 ##########################################################################
 
-from django.views.generic import TemplateView
-from django.conf.urls import include, url
 from django.contrib import admin
+from rest_framework import routers
+from django.conf.urls import include, url
 
-from logbook.views import HomePageView
+from django.views.generic import TemplateView
+
+from logbook.views import *
+from members.views import *
+from catalog.views import *
+
+##########################################################################
+## Endpoint Discovery
+##########################################################################
+
+## API
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'status', HeartbeatViewSet, "status")
 
 ##########################################################################
 ## URL Patterns
@@ -34,10 +47,14 @@ urlpatterns = [
 
     # Application URLs
     url(r'^$', HomePageView.as_view(), name='home'),
+    url(r'^profile/$', ProfileView.as_view(), name='profile'),
     url(r'^terms/$', TemplateView.as_view(template_name='site/legal/terms.html'), name='terms'),
     url(r'^privacy/$', TemplateView.as_view(template_name='site/legal/privacy.html'), name='privacy'),
 
     # Authentication URLs
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('^accounts/', include('django.contrib.auth.urls')),
+
+    ## REST API Urls
+    url(r'^api/', include(router.urls, namespace="api")),
 ]

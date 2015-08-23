@@ -105,7 +105,7 @@ INSTALLED_APPS = (
 
     # Third party apps
     'social.apps.django_app.default',
-    # 'rest_framework',
+    'rest_framework',
     'storages',
     'django_gravatar',
 
