@@ -16,6 +16,22 @@
   var csrfToken   = $('input[name="csrfmiddlewaretoken"]').val();
   $.ajaxSetup({headers: {"X-CSRFToken": csrfToken}});
 
+  // Update the status and the version from the API.
+  var statusURL = "/api/status/";
+  $.get(statusURL)
+    .success(function(data) {
+      $("#footerVersion").text(data.version);
+      if (data.status == "ok") {
+        $("#footerStatus").addClass("text-success");
+      } else {
+        $("#footerStatus").addClass("text-warning");
+      }
+    })
+    .fail(function() {
+      $("#footerVersion").text("X.X");
+      $("#footerStatus").addClass("text-danger");
+    });
+
   console.log("Logbook App is started and ready");
 
 })();
