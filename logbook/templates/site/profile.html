@@ -60,13 +60,13 @@
           <li>
             <a href="#">
               <span class="statistic">0</span>
-              <span class="statlabel">[insert stat here]</span>
+              <span class="statlabel">[insert stat]</span>
             </a>
           </li>
           <li>
             <a href="#">
               <span class="statistic">0</span>
-              <span class="statlabel">[insert stat here]</span>
+              <span class="statlabel">[insert stat]</span>
             </a>
           </li>
         </ul>
@@ -132,10 +132,11 @@
   <script type="text/javascript">
     (function($) {
         $(document).ready(function() {
+          
             // Configure the profile application
             var csrfToken   = $('input[name="csrfmiddlewaretoken"]').val();
             $.ajaxSetup({headers: {"X-CSRFToken": csrfToken}});
-            console.log("profile application ready");
+            console.log("Profile application ready");
 
             var passwordForm = $("#setPasswordForm");
             var userDetail   = "{{ user.profile.get_api_detail_url }}";

@@ -40,6 +40,7 @@
             <textarea rows="3", class="form-control" id="biography" name="biography">{% if user.profile.biography %}{{ user.profile.biography }}{% endif %}</textarea>
             <span class="help-block"></span>
           </div>
+          {% csrf_token %}
         </form>
       </div>
       <div class="modal-footer">

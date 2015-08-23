@@ -21,6 +21,8 @@
 
 #profile-sidebar ul li {
     margin-bottom: 3px;
+    overflow-x: scroll;
+    font-size: 16px;
 }
 
 #profile-sidebar ul i, span.fa {
@@ -72,4 +74,45 @@
 ul.activity-stream li {
     margin: 10px 0;
     color: #333;
+}
+
+/* Number stats inline */
+
+.number-stats li {
+    width: 32%;
+}
+
+.number-stats a {
+    display: block;
+    color: #333;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+}
+
+.number-stats a:hover {
+    color: #428bca;
+    text-decoration: none;
+}
+
+.number-stats a span {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.statistic {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.statlabel {
+    font-size: 0.7em;
+    color: #999;
+    margin: 0;
+}
+
+.tab-pane {
+    margin-top: 10px;
 }
