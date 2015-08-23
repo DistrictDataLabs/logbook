@@ -26,6 +26,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 import dj_database_url
 
+from logbook.utils import htmlize
 from django.conf import global_settings
 
 ##########################################################################
@@ -108,7 +109,9 @@ INSTALLED_APPS = (
     'storages',
     'django_gravatar',
 
-    # LogBook apps
+    # Logbook apps
+    'catalog',
+    'members',
 )
 
 ## Request Handling
@@ -199,6 +202,15 @@ EMAIL_SUBJECT_PREFIX = '[LOGBOOK] '
 GRAVATAR_DEFAULT_SIZE   = 128
 GRAVATAR_DEFAULT_IMAGE  = 'mm'
 GRAVATAR_DEFAULT_RATING = 'r'
+GRAVATAR_ICON_SIZE      = 30
+
+##########################################################################
+## MarkupField Configuration
+##########################################################################
+
+MARKUP_FIELD_TYPES = (
+    ('markdown', htmlize),
+)
 
 ##########################################################################
 ## Social Authentication

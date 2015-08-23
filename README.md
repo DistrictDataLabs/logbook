@@ -20,7 +20,9 @@ LogBook is open source, but because this is an District Data Labs project, we wo
 2. Work on a card on the dev board: [https://waffle.io/DistrictDataLabs/logbook](https://waffle.io/DistrictDataLabs/logbook)
 3. Create a pull request in Github: [https://github.com/DistrictDataLabs/logbook/pulls](https://github.com/DistrictDataLabs/logbook/pulls)
 
-If you are a member of the MCL group, you have direct access to the repository, which is set up in a typical production/release/development cycle as described in _[A Successful Git Branching Model](http://nvie.com/posts/a-successful-git-branching-model/)_. A typical workflow is as follows:
+Note that labels in the Github issues are defined in the blog post: [How we use labels on GitHub Issues at Mediocre Laboratories](https://mediocre.com/forum/topics/how-we-use-labels-on-github-issues-at-mediocre-laboratories). 
+
+If you are a member of the District Data Labs Faculty group, you have direct access to the repository, which is set up in a typical production/release/development cycle as described in _[A Successful Git Branching Model](http://nvie.com/posts/a-successful-git-branching-model/)_. A typical workflow is as follows:
 
 1. Select a card from the [dev board](https://waffle.io/DistrictDataLabs/logbook) - preferably one that is "ready" then move it to "in-progress".
 

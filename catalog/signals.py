@@ -1,27 +1,27 @@
-# logbook
-# A simple web application for activity tracking and event aggregation.
+# catalog.signals
+# Signals for handling model events in the catalog app
 #
 # Author:   Benjamin Bengfort <bbengfort@districtdatalabs.com>
-# Created:  Fri Aug 21 16:19:54 2015 -0500
+# Created:  Fri Aug 21 17:06:20 2015 -0500
 #
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: __init__.py [] benjamin@bengfort.com $
+# ID: signals.py [] benjamin@bengfort.com $
 
 """
-A simple web application for activity tracking and event aggregation.
+Signals for handling model events in the catalog app.
 """
 
 ##########################################################################
 ## Imports
 ##########################################################################
 
-from __future__ import absolute_import
-from .version import get_version
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+
+from catalog.models import Course
 
 ##########################################################################
-## Module Definition
+## Course Signals
 ##########################################################################
-
-__version__ = get_version()

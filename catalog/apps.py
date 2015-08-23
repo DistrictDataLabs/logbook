@@ -1,27 +1,32 @@
-# logbook
-# A simple web application for activity tracking and event aggregation.
+# catalog.apps
+# Describes the Catalog application for Django
 #
 # Author:   Benjamin Bengfort <bbengfort@districtdatalabs.com>
-# Created:  Fri Aug 21 16:19:54 2015 -0500
+# Created:  Fri Aug 21 17:25:26 2015 -0500
 #
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: __init__.py [] benjamin@bengfort.com $
+# ID: apps.py [] benjamin@bengfort.com $
 
 """
-A simple web application for activity tracking and event aggregation.
+Describes the Catalog application for Django
 """
 
 ##########################################################################
 ## Imports
 ##########################################################################
 
-from __future__ import absolute_import
-from .version import get_version
+from django.apps import AppConfig
 
 ##########################################################################
-## Module Definition
+## Catalog Config
 ##########################################################################
 
-__version__ = get_version()
+class CatalogConfig(AppConfig):
+
+    name = 'catalog'
+    verbose_name = 'Catalog'
+
+    def ready(self):
+        import catalog.signals
