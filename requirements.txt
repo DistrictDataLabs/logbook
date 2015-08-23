@@ -5,7 +5,10 @@ django-dotenv==1.3.0
 django-grappelli==2.7.1
 django-gravatar2==1.3.0
 django-model-utils==2.3.1
+django-autoslug==1.8.0
 django-storages==1.1.8
+django-markupfield==1.3.5
+djangorestframework==3.2.2
 whitenoise==2.0.3
 gunicorn==19.3.0
 
@@ -23,6 +26,11 @@ oauthlib==1.0.3
 PyJWT==1.4.0
 python-openid==2.2.5
 
+## User input from Markdown
+Markdown==2.6.2
+bleach==1.4.1
+html5lib==0.999999
+
 ## Utilities
 python-dateutil==2.4.2
 six==1.9.0
@@ -30,3 +38,6 @@ six==1.9.0
 ## Testing
 nose==1.3.7
 coverage==3.7.1
+mock==1.3.0
+funcsigs==0.4
+pbr==1.5.0

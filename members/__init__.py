@@ -1,8 +1,8 @@
-# logbook
-# A simple web application for activity tracking and event aggregation.
+# members
+# The members app manages information about people - faculty and students.
 #
 # Author:   Benjamin Bengfort <bbengfort@districtdatalabs.com>
-# Created:  Fri Aug 21 16:19:54 2015 -0500
+# Created:  Sat Aug 22 09:23:38 2015 -0500
 #
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
@@ -10,18 +10,15 @@
 # ID: __init__.py [] benjamin@bengfort.com $
 
 """
-A simple web application for activity tracking and event aggregation.
+The members app manages information about people - faculty and students.
 """
 
 ##########################################################################
 ## Imports
 ##########################################################################
 
-from __future__ import absolute_import
-from .version import get_version
-
 ##########################################################################
-## Module Definition
+## Configuration
 ##########################################################################
 
-__version__ = get_version()
+default_app_config = 'members.apps.MembersConfig'

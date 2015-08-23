@@ -28,7 +28,10 @@ import dotenv
 
 if __name__ == "__main__":
     ## Manage Django Environment
-    dotenv.read_dotenv()
+    if os.path.exists('.env'):
+        dotenv.read_dotenv()
+
+    ## Set the default settings module
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logbook.settings.production")
 
     ## Execute Django utility

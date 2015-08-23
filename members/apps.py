@@ -1,27 +1,31 @@
-# logbook
-# A simple web application for activity tracking and event aggregation.
+# members.apps
+# Describes the Members application for Django
 #
 # Author:   Benjamin Bengfort <bbengfort@districtdatalabs.com>
-# Created:  Fri Aug 21 16:19:54 2015 -0500
+# Created:  Sat Aug 22 10:41:24 2015 -0500
 #
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: __init__.py [] benjamin@bengfort.com $
+# ID: apps.py [] benjamin@bengfort.com $
 
 """
-A simple web application for activity tracking and event aggregation.
+Describes the Members application for Django
 """
 
 ##########################################################################
 ## Imports
 ##########################################################################
 
-from __future__ import absolute_import
-from .version import get_version
+from django.apps import AppConfig
 
 ##########################################################################
-## Module Definition
+## Members Config
 ##########################################################################
 
-__version__ = get_version()
+class MembersConfig(AppConfig):
+    name = 'members'
+    verbose_name = "Member Profiles"
+
+    def ready(self):
+        import members.signals
