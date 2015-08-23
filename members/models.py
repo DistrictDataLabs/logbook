@@ -26,6 +26,7 @@ from logbook.utils import nullable
 from autoslug import AutoSlugField
 from model_utils.models import TimeStampedModel
 from markupfield.fields import MarkupField
+from django.core.urlresolvers import reverse
 
 ##########################################################################
 ## DDL Roles and Membership Information
@@ -116,6 +117,12 @@ class Profile(TimeStampedModel):
         return "http://www.gravatar.com/avatar/{}?{}".format(
             self.email_hash, params
         )
+
+    def get_api_detail_url(self):
+        """
+        Returns the API detail endpoint for the object
+        """
+        return reverse('api:user-detail', args=(self.user.pk,))
 
     def __unicode__(self):
         return self.full_email

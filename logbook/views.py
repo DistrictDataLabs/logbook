@@ -17,8 +17,16 @@ Default application views for the system.
 ## Imports
 ##########################################################################
 
+import logbook
+
+from datetime import datetime
+
 from braces.views import LoginRequiredMixin
 from django.views.generic import TemplateView
+
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
 ##########################################################################
 ## Views
@@ -27,3 +35,22 @@ from django.views.generic import TemplateView
 class HomePageView(LoginRequiredMixin, TemplateView):
 
     template_name = "site/home.html"
+
+
+##########################################################################
+## API Views for this application
+##########################################################################
+
+class HeartbeatViewSet(viewsets.ViewSet):
+    """
+    Endpoint for heartbeat checking, including the status and version.
+    """
+
+    permission_classes = (AllowAny,)
+
+    def list(self, request):
+        return Response({
+            "status": "ok",
+            "version": logbook.get_version(),
+            "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+        })
