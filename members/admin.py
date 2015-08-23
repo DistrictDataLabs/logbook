@@ -20,11 +20,20 @@ Administrative interface for members in Logbook.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from members.models import Profile
+from members.models import Profile, Role, Membership
 
 ##########################################################################
 ## Inline Adminstration
 ##########################################################################
+
+class MembershipInline(admin.StackedInline):
+    """
+    Inline administration descriptor for memberships
+    """
+
+    model = Membership
+    extra = 1
+    verbose_name_plural = 'roles'
 
 
 class ProfileInline(admin.StackedInline):
@@ -44,9 +53,22 @@ class UserAdmin(UserAdmin):
 
     inlines = (ProfileInline, )
 
+
+class ProfileAdmin(admin.ModelAdmin):
+    """
+    Editing profiles without editing the user field.
+    """
+
+    readonly_fields = ('user', )
+    fields = ('user', 'organization', 'location', 'biography')
+    inlines = (MembershipInline, )
+
+
 ##########################################################################
 ## Register Admin
 ##########################################################################
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.register(Role)
+admin.site.register(Profile, ProfileAdmin)

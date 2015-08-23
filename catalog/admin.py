@@ -18,5 +18,32 @@ Admin models for ORM management of the catalog models.
 ##########################################################################
 
 from django.contrib import admin
+from catalog.models import Course, Instructor
 
-# Register your models here.
+##########################################################################
+## Inline Adminstration
+##########################################################################
+
+
+class InstructorInline(admin.TabularInline):
+    """
+    Inline administration descriptor for profile object
+    """
+
+    model = Instructor
+    extra = 1
+    verbose_name_plural = 'instructors'
+
+
+class CourseAdmin(admin.ModelAdmin):
+    """
+    Define new Course admin view
+    """
+
+    inlines = (InstructorInline, )
+
+##########################################################################
+## Register Admin
+##########################################################################
+
+admin.site.register(Course, CourseAdmin)
