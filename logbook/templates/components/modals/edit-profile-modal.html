@@ -36,9 +36,14 @@
             <span class="help-block"></span>
           </div>
           <div class="form-group">
-            <label for="biography">Short Biography</label>
-            <textarea rows="3", class="form-control" id="biography" name="biography">{% if user.profile.biography %}{{ user.profile.biography }}{% endif %}</textarea>
+            <label for="organization">Location</label>
+            <input type="text" class="form-control" value="{{ user.profile.location }}" placeholder="Location" id="location" name="location">
             <span class="help-block"></span>
+          </div>
+          <div class="form-group">
+            <label for="biography">Short Biography</label>
+            <textarea rows="3", class="form-control" id="biography" name="biography">{% if user.profile.biography %}{{ user.profile.biography.raw }}{% endif %}</textarea>
+            <span class="help-block">Edit in Markdown</span>
           </div>
           {% csrf_token %}
         </form>

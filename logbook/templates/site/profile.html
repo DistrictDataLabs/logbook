@@ -32,7 +32,7 @@
         <ul class="list-unstyled">
           <li id="userLocation" class="editable-item">
             <i class="fa fa-map-marker"></i>
-            {{ user.profile.location }}
+            <span id="profileLocation">{{ user.profile.location }}</span>
           </li>
           <li id="userOrganization">
             <i class="fa fa-building"></i>
@@ -132,7 +132,7 @@
   <script type="text/javascript">
     (function($) {
         $(document).ready(function() {
-          
+
             // Configure the profile application
             var csrfToken   = $('input[name="csrfmiddlewaretoken"]').val();
             $.ajaxSetup({headers: {"X-CSRFToken": csrfToken}});
@@ -179,16 +179,18 @@
             profileForm.submit(function(e) {
                 e.preventDefault();
                 // Get the form data
-                var data = _.object(profileForm.serializeArray()
-                                        .map(function(v) {
-                                            return [v.name, v.value];
-                                        }));
+                var data = utils.formData(profileForm);
+
                 data.profile = {
                     "biography": data.biography,
-                    "organization": data.organization
+                    "organization": data.organization,
+                    "location": data.location
                 };
+
                 delete data.biography;
                 delete data.organization;
+                delete data.location;
+
                 $.ajax({
                     "url": userDetail,
                     "method": "PUT",
@@ -200,6 +202,7 @@
                     $("#profileUsername").text(data.username);
                     $("#profileEmail").text(data.email);
                     $("#profileOrganization").text(data.profile.organization);
+                    $("#profileLocation").text(data.profile.location);
                     $("#editProfileModal").modal("hide");
                 }).fail(function(xhr) {
                     data = xhr.responseJSON;
