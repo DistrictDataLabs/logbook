@@ -79,7 +79,8 @@ class Course(DDLEvent):
     TYPES  = Choices('workshop', 'webinar', 'lecture')
 
     course_type = models.CharField(max_length=10, choices=TYPES, default=TYPES.workshop)
-    instructors = models.ManyToManyField('auth.User', through='catalog.Instructor', related_name='courses')
+    instructors = models.ManyToManyField('auth.User', through='catalog.Instructor', related_name='taught_courses')
+    students    = models.ManyToManyField('auth.User', through='catalog.Enrollment', related_name='enrolled_courses')
 
     class Meta:
         db_table = 'courses'
@@ -93,8 +94,9 @@ class Course(DDLEvent):
         """
         return reverse('course', kwargs={'slug': self.slug})
 
+
 ##########################################################################
-## Instructors
+## Instructors & Enrollment: relationships between users and courses.
 ##########################################################################
 
 class Instructor(TimeStampedModel):
@@ -107,3 +109,28 @@ class Instructor(TimeStampedModel):
     course = models.ForeignKey('catalog.Course')
     user   = models.ForeignKey('auth.User')
     role   = models.ForeignKey('members.Role', related_name='+')
+
+    def __unicode__(self):
+        return "{} teaching {}".format(self.user.full_name(), self.course)
+
+
+class Enrollment(TimeStampedModel):
+    """
+    A relationship between a user and a course that describes their enrollment
+    and participation in a course. This is similar to Instructor
+    """
+
+    GRADES = Choices(
+                ('SC', 'Satisfactory Completion'),
+                ('I',  'Incomplete'),
+                ('RE', 'Registered, but Never Attended'),
+                ('AT', 'Attendance Verfied'),
+                ('W',  'Withdrawn'),
+             )
+
+    course = models.ForeignKey('catalog.Course')
+    user   = models.ForeignKey('auth.User')
+    result = models.CharField(max_length=2, choices=GRADES, **nullable)
+
+    def __unicode__(self):
+        return "{} enrolled in {}".format(self.user.full_name(), self.course)
