@@ -48,6 +48,7 @@ class Role(TimeStampedModel):
     parent   = models.ForeignKey('self', related_name='subroles', **nullable)
 
     class Meta:
+        db_table = 'roles'
         get_latest_by = 'created'
 
     def __unicode__(self):
@@ -68,6 +69,7 @@ class Membership(TimeStampedModel):
     sponsor     = models.ForeignKey('auth.User', related_name='sponsorship', **nullable)
 
     class Meta:
+        db_table = 'membership'
         get_latest_by = 'created'
 
     def __unicode__(self):
@@ -88,6 +90,9 @@ class Profile(TimeStampedModel):
     location     = models.CharField(max_length=255, **nullable)
     biography    = MarkupField(markup_type='markdown', help_text='Edit in Markdown', **nullable)
     roles        = models.ManyToManyField('members.Role', through='members.Membership', related_name='members')
+
+    class Meta:
+        db_table = 'member_profiles'
 
     @property
     def full_name(self):

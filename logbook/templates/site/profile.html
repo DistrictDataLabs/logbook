@@ -59,14 +59,14 @@
           </li>
           <li>
             <a href="#">
-              <span class="statistic">0</span>
-              <span class="statlabel">[insert stat]</span>
+              <span class="statistic">{{ user.taught_courses.count }}</span>
+              <span class="statlabel">courses</span>
             </a>
           </li>
           <li>
             <a href="#">
-              <span class="statistic">0</span>
-              <span class="statlabel">[insert stat]</span>
+              <span class="statistic">{{ user.publications.count }}</span>
+              <span class="statlabel">publications</span>
             </a>
           </li>
         </ul>
@@ -92,6 +92,11 @@
 
           <ul class="nav nav-tabs">
             <li class="active">
+              <a href="#details" data-toggle="tab">
+                <i class="fa fa-flask"></i> Details
+              </a>
+            </li>
+            <li>
               <a href="#activity" data-toggle="tab">
                 <i class="fa fa-rss"></i> Activity
               </a>
@@ -103,14 +108,87 @@
         <!-- end profile tabs -->
 
         <div class="tab-content">
-          <div id="activity" class="tab-pane active">
+
+          <div id="details" class="tab-pane active">
+
+            <!-- Biography if it exists -->
+            {% if user.profile.biography.raw %}
+            <div class="well">
+              {{ user.profile.biography }}
+            </div>
+            {% endif %}
+
+            <!-- Courses table -->
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">Courses Taught</h4>
+              </div>
+              <table class="table table-striped table-hover">
+                <thead>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th class="text-center">Instructors</th>
+                  <th class="text-center">Students</th>
+                </thead>
+                <tbody>
+                  {% for course in user.taught_courses.all %}
+                  <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.begins }}</td>
+                    <td class="text-center">{{ course.instructors.count }}</td>
+                    <td class="text-center">{{ course.students.count }}</td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="4">No courses taught</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Two column rows and publications -->
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">Roles</h4>
+                  </div>
+                  <ul class="list-group">
+                    {% for role in user.profile.roles.all %}
+                    <li class="list-group-item">{{ role }}</li>
+                    {% empty %}
+                    <li class="list-group-item">No associated roles</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">Publications</h4>
+                  </div>
+                  {% for pub in user.publications.all %}
+                  <li class="list-group-item">{{ pub }}</li>
+                  {% empty %}
+                  <li class="list-group-item">No publications</li>
+                  {% endfor %}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div id="activity" class="tab-pane">
             <div class="well">
               <!-- Activity Log -->
               <ul class="list-unstyled activity-stream">
                 <li>No activities recorded yet</li>
               </ul><!-- end activity log -->
             </div>
-
           </div><!-- activity panel ends -->
         </div><!-- tab-content ends -->
 

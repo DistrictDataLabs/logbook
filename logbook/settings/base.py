@@ -71,7 +71,8 @@ DATABASES = {
     'default': dj_database_url.config(),
 }
 
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
+# DATABASES['default']['ENGINE'] = 'django_postgrespool'
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 ##########################################################################
 ## Runtime settings
@@ -199,7 +200,7 @@ EMAIL_SUBJECT_PREFIX = '[LOGBOOK] '
 ## Gravatar Configuration
 ##########################################################################
 
-GRAVATAR_DEFAULT_SIZE   = 128
+GRAVATAR_DEFAULT_SIZE   = 512
 GRAVATAR_DEFAULT_IMAGE  = 'mm'
 GRAVATAR_DEFAULT_RATING = 'r'
 GRAVATAR_ICON_SIZE      = 30
