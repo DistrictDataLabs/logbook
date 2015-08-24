@@ -15,8 +15,6 @@ gunicorn==19.3.0
 ## Database Requirements
 psycopg2==2.6.1
 dj-database-url==0.3.0
-django-postgrespool==0.3.0
-SQLAlchemy==1.0.8
 
 ## Social Auth
 python-social-auth==0.2.12
