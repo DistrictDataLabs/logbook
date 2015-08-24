@@ -23,8 +23,10 @@ import argparse
 from dateutil import parser
 from collections import Counter
 from django.utils import timezone
+from datetime import datetime, time
 from django.contrib.auth.models import User
 from catalog.models import Course, Enrollment, Instructor
+from members.models import Role, Membership
 from django.core.management.base import BaseCommand, CommandError
 
 ##########################################################################
@@ -58,7 +60,7 @@ class Command(BaseCommand):
             help='Activity CSV file with user to action detail'
         )
 
-    def get_user(self, email, full_name, counts):
+    def get_user(self, email, full_name, date, counts):
         """
         Get or creates a User object using the email address as the key.
         """
@@ -75,15 +77,24 @@ class Command(BaseCommand):
             raise ValueError("No full name was supplied!")
 
         # Create the user since we couldn't find them
-        counts['Inserted DDL Member Information'] += 1
         kwargs = {
             "email"      : email,
             "first_name" : " ".join(full_name[:-1]),
             "last_name"  : full_name[-1],
             "username"   : (full_name[0][0] + full_name[-1]).lower(),
+            "date_joined": date,
         }
 
-        return User.objects.create(**kwargs)
+        try:
+            user = User.objects.create(**kwargs)
+            counts['Inserted DDL Member Information'] += 1
+            return user
+        except Exception as e:
+            for notice in str(e).split("\n"):
+                notice = notice.strip()
+                if not notice: continue
+                counts["Couldn't create user: {}".format(notice)] += 1
+            return None
 
     def handle(self, **options):
         """
@@ -115,7 +126,10 @@ class Command(BaseCommand):
 
         # Jump table for handling different ingestion actions
         actions = {
-            "registeredforworkshop": self.handle_registration,
+            "registeredforworkshop": self.handle_enrollment,
+            'taughtworkshop': self.handle_instructor,
+            'taforworkshop': self.handle_instructor,
+            'organizedworkshop': self.handle_instructor,
         }
 
         # Parse the activity csv file
@@ -132,14 +146,8 @@ class Command(BaseCommand):
             row['ActionDate'] = parser.parse(row['ActionDate'])
 
             # Try to add user to the row
-            try:
-                row['User'] = self.get_user(row['Email'], row['FullName'], counts)
-            except Exception as e:
-                for notice in str(e).split("\n"):
-                    notice = notice.strip()
-                    if not notice: continue
-                    counts["Couldn't create user: {}".format(notice)] += 1
-                continue
+            row['User'] = self.get_user(row['Email'], row['FullName'], row['ActionDate'], counts)
+            if row['User'] is None: continue
 
             # Handle action according to jump table
             actions[action](row, counts)
@@ -147,18 +155,93 @@ class Command(BaseCommand):
         # Return the finialized counts
         return counts
 
-    def handle_registration(self, row, counts):
+    def handle_enrollment(self, row, counts):
         """
-        Handle the student registration action.
+        Handle the student enrollment (registration) action.
         """
+        # Assign the student membership to the user
+        membership, created = Membership.objects.get_or_create(
+            role=Role.objects.get(slug="student"), profile=row['User'].profile
+        )
+        if created:
+            counts['New student role added'] += 1
+        else:
+            counts['Duplicate student role detected'] += 1
 
         # Find the course for the registration
         course = Course.objects.filter(name=row['Detail'])
-        course = course.filter(begins__gte=row['ActionDate'])
+        course = course.filter(begins__gte=row['ActionDate']).order_by('begins')
         course = course.first()
 
         if not course:
-            course = Course.objects.create(name=row['Detail'], begins=timezone.now())
-        
-        counts['Duplicate registrations'] += 1
-        counts['New registrations'] += 2
+            counts['Course not found: {}'.format(row['Detail'])] += 1
+            return
+
+        kwargs = {
+            'user': row['User'],
+            'course': course,
+            'result': Enrollment.GRADES.SC,
+            'created': row['ActionDate'],
+        }
+
+        enroll, created = Enrollment.objects.get_or_create(**kwargs)
+        if created:
+            counts['New Enrollments'] += 1
+        else:
+            counts['Duplicate Enrollments'] += 1
+
+    def handle_instructor(self, row, counts):
+        """
+        Handle the course and instructor creation action.
+        """
+
+        bdte = row['ActionDate'].date()
+        dmin = datetime.combine(bdte, time.min)
+        dmax = datetime.combine(bdte, time.max)
+
+        # Find the course for the instructor
+        course = Course.objects.filter(name=row['Detail'], begins__range=(dmin, dmax))
+        course = course.first()
+
+        if not course:
+            course = Course.objects.create(
+                name=row['Detail'],
+                begins=datetime.combine(bdte, time(9,0)),
+                finishes=datetime.combine(bdte, time(17,0)),
+                course_type=Course.TYPES.workshop,
+                created=row['ActionDate'],
+            )
+
+            print 'Created course: {}'.format(course)
+            counts['Courses created from instructor records'] += 1
+
+        # Find the role for the instructor
+        role_slug = {
+            "taughtworkshop":"instructor",
+            "organizedworkshop":"organizer",
+            "taforworkshop":"teaching-assistant",
+        }[normalize(row['Action'])]
+        role = Role.objects.get(slug=role_slug)
+
+        # Create the instructor relationship to the course
+        kwargs = {
+            'role': role,
+            'course': course,
+            'user': row['User'],
+            'created': row['ActionDate'],
+        }
+
+        instruct, created = Instructor.objects.get_or_create(**kwargs)
+        if created:
+            counts['New Instructor'] += 1
+        else:
+            counts['Duplicate Instructor'] += 1
+
+        # Assign the instructor membership to the user
+        membership, created = Membership.objects.get_or_create(
+            role=role, profile=row['User'].profile
+        )
+        if created:
+            counts['New {} role added'.format(role)] += 1
+        else:
+            counts['Duplicate {} role detected'.format(role)] += 1

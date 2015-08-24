@@ -94,6 +94,9 @@ class Course(DDLEvent):
         """
         return reverse('course', kwargs={'slug': self.slug})
 
+    def __unicode__(self):
+        return "{} on {}".format(self.name, self.begins.strftime('%b %d, %Y'))
+
 
 ##########################################################################
 ## Instructors & Enrollment: relationships between users and courses.
@@ -117,7 +120,7 @@ class Instructor(TimeStampedModel):
         unique_together = ('user', 'course', 'role')
 
     def __unicode__(self):
-        return "{} teaching {}".format(self.user.full_name(), self.course)
+        return "{} teaching {}".format(self.user.profile.full_name, self.course)
 
 
 class Enrollment(TimeStampedModel):
@@ -144,4 +147,4 @@ class Enrollment(TimeStampedModel):
         get_latest_by   = 'created'
 
     def __unicode__(self):
-        return "{} enrolled in {}".format(self.user.full_name(), self.course)
+        return "{} enrolled in {}".format(self.user.profile.full_name, self.course)
