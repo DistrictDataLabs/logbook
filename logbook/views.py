@@ -28,6 +28,10 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
+# Temporary context for home dashboard view
+from catalog.models import *
+from members.models import *
+
 ##########################################################################
 ## Views
 ##########################################################################
@@ -36,6 +40,17 @@ class HomePageView(LoginRequiredMixin, TemplateView):
 
     template_name = "site/home.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data(**kwargs)
+        context['courses'] = Course.objects.all()
+        context['publications'] = Publication.objects.all()
+        context['roles'] = Role.objects.all()
+        context['counts'] = {}
+
+        for model in (Course, Instructor, Enrollment, Subscription, Publication, Role, Membership, Profile):
+            context['counts'][model._meta.verbose_name_plural.title()] = model.objects.count()
+
+        return context
 
 ##########################################################################
 ## API Views for this application

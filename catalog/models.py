@@ -189,6 +189,8 @@ class Publication(TimeStampedModel):
 
     class Meta:
         db_table = 'publications'
+        ordering = ('-pubdate', '-created')
+        get_latest_by = 'pubdate'
 
     def __unicode__(self):
         return self.title
