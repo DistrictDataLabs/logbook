@@ -29,6 +29,7 @@ from catalog.models import Course, Enrollment, Instructor
 from catalog.models import Subscription, Publication
 from members.models import Role, Membership
 from django.core.management.base import BaseCommand, CommandError
+from django.db import connection
 
 ##########################################################################
 ## Ingest Command
@@ -92,6 +93,7 @@ class Command(BaseCommand):
             counts['Inserted DDL Member Information'] += 1
             return user
         except Exception as e:
+            connection._rollback()
             for notice in str(e).split("\n"):
                 notice = notice.strip()
                 if not notice: continue
