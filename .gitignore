@@ -62,3 +62,6 @@ target/
 # Virtual Environment
 venv
 .env
+
+# Fixtures
+fixtures

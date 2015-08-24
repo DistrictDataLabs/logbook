@@ -1,0 +1,170 @@
+[
+{
+  "fields": {
+    "name": "Participant",
+    "parent": null,
+    "created": "2015-08-23T15:49:33.597Z",
+    "_details_rendered": "<p>There are several ways to participate in DDL - most of which are on a volunteer basis. This is the top level for participation style roles. </p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-23T15:49:33.601Z",
+    "details": "There are several ways to participate in DDL - most of which are on a volunteer basis. This is the top level for participation style roles. ",
+    "slug": "participant"
+  },
+  "model": "members.role",
+  "pk": 1
+},
+{
+  "fields": {
+    "name": "Student",
+    "parent": 1,
+    "created": "2015-08-23T15:50:13.582Z",
+    "_details_rendered": "<p><strong>Description</strong>: Attend our workshops, webinars, incubators, research labs</p>\n<p><strong>Responsibilities</strong>: Come to workshops, learn, ask questions, read our blog, pursue learning opportunities. </p>\n<p><strong>Benefits</strong>: Learning, expanded network via interaction with instructors and other students. </p>\n<p><strong>Duration</strong>: Single day or ongoing if they participate in multiple workshops, webinars, incubators, research labs, etc. </p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-23T15:50:13.590Z",
+    "details": "**Description**: Attend our workshops, webinars, incubators, research labs\r\n\r\n**Responsibilities**: Come to workshops, learn, ask questions, read our blog, pursue learning opportunities. \r\n\r\n**Benefits**: Learning, expanded network via interaction with instructors and other students. \r\n\r\n**Duration**: Single day or ongoing if they participate in multiple workshops, webinars, incubators, research labs, etc. ",
+    "slug": "student"
+  },
+  "model": "members.role",
+  "pk": 2
+},
+{
+  "fields": {
+    "name": "Contributor",
+    "parent": 1,
+    "created": "2015-08-23T15:50:53.421Z",
+    "_details_rendered": "<p>This is the top level for folks who contribute to DDL in some way.</p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T15:49:49.281Z",
+    "details": "This is the top level for folks who contribute to DDL in some way.",
+    "slug": "contributor"
+  },
+  "model": "members.role",
+  "pk": 3
+},
+{
+  "fields": {
+    "name": "Intern",
+    "parent": 3,
+    "created": "2015-08-23T15:51:45.262Z",
+    "_details_rendered": "<p><strong>Description</strong>: Unpaid participants interested in learning, gaining experience, and being mentored. </p>\n<p><strong>Responsibilities</strong>: They would be assigned guided projects or tasks and would assist with writing blog posts, while working with and being mentored by DDL partners and faculty. </p>\n<p><strong>Benefits</strong>: Learning, experience, and exposure to data science. Allowed to sit in on DDL workshops and webinars for free for duration of role. Sometimes provided the opportunity to TA and make some money. This role can also lead to instructor or faculty position. Invited to DDL social events. </p>\n<p><strong>Duration</strong>: 6 months to 1 year</p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T15:49:32.010Z",
+    "details": "**Description**: Unpaid participants interested in learning, gaining experience, and being mentored. \r\n\r\n**Responsibilities**: They would be assigned guided projects or tasks and would assist with writing blog posts, while working with and being mentored by DDL partners and faculty. \r\n\r\n**Benefits**: Learning, experience, and exposure to data science. Allowed to sit in on DDL workshops and webinars for free for duration of role. Sometimes provided the opportunity to TA and make some money. This role can also lead to instructor or faculty position. Invited to DDL social events. \r\n\r\n**Duration**: 6 months to 1 year",
+    "slug": "intern"
+  },
+  "model": "members.role",
+  "pk": 4
+},
+{
+  "fields": {
+    "name": "Blog Author",
+    "parent": 3,
+    "created": "2015-08-23T15:52:16.173Z",
+    "_details_rendered": "<p><strong>Description</strong>: Contribute hands-on technical content to our blog in order to get themselves more exposure and showcase their expertise. </p>\n<p><strong>Responsibilities</strong>: Write at least one long form tutorial blog post per quarter. </p>\n<p><strong>Benefits</strong>: Exposure to our audience, promotion of themselves and their material, and association with DDL. </p>\n<p><strong>Duration</strong>: Ongoing as long as they are contributing quality material</p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T15:50:03.177Z",
+    "details": "**Description**: Contribute hands-on technical content to our blog in order to get themselves more exposure and showcase their expertise. \r\n\r\n**Responsibilities**: Write at least one long form tutorial blog post per quarter. \r\n\r\n**Benefits**: Exposure to our audience, promotion of themselves and their material, and association with DDL. \r\n\r\n**Duration**: Ongoing as long as they are contributing quality material",
+    "slug": "blog-author"
+  },
+  "model": "members.role",
+  "pk": 5
+},
+{
+  "fields": {
+    "name": "Instructor",
+    "parent": 1,
+    "created": "2015-08-23T15:53:30.162Z",
+    "_details_rendered": "<p><strong>Description</strong>: Hired on an individual basis to teach workshops, webinars, or corporate training classes. Less involved and less affiliation with DDL than a faculty role. </p>\n<p><strong>Responsibilities</strong>: Teach at least one workshop or webinar per year. </p>\n<p><strong>Benefits</strong>: Monetary compensation, allowed to sit in on other workshops/webinars (dependent on space, how many workshops/webinars they teach, and whether they'd like to TA), invited to DDL social events. </p>\n<p><strong>Duration</strong>: Ongoing for as long as both parties are interested</p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T15:50:17.328Z",
+    "details": "**Description**: Hired on an individual basis to teach workshops, webinars, or corporate training classes. Less involved and less affiliation with DDL than a faculty role. \r\n\r\n**Responsibilities**: Teach at least one workshop or webinar per year. \r\n\r\n**Benefits**: Monetary compensation, allowed to sit in on other workshops/webinars (dependent on space, how many workshops/webinars they teach, and whether they'd like to TA), invited to DDL social events. \r\n\r\n**Duration**: Ongoing for as long as both parties are interested",
+    "slug": "instructor"
+  },
+  "model": "members.role",
+  "pk": 6
+},
+{
+  "fields": {
+    "name": "Faculty",
+    "parent": 6,
+    "created": "2015-08-23T15:54:09.669Z",
+    "_details_rendered": "<p><strong>Description</strong>: More involved with DDL than instructors; teaching, writing, leading research groups, mentoring interns, attending monthly faculty meetings. </p>\n<p><strong>Responsibilities</strong>: Teach at least one workshop or webinar per year, write at least one blog post every 6 months, and either lead a research group or mentor interns/trainees/apprentices and/or incubator teams every 6 months. </p>\n<p><strong>Benefits</strong>: Monetary compensation for some activities (ex. teaching, TAing), additional data science learning and experience, promotion of themselves and their knowledge, expanded/stronger network, allowed to sit in on other workshops/webinars (dependent on space, the amount and quality of their contributions, and whether they'd like to TA), invited to DDL social events, invited to monthly faculty events (catered), DDL email address (official affiliation with the organization). </p>\n<p><strong>Duration</strong>: Ongoing for as long as both parties are interested</p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-23T15:54:09.676Z",
+    "details": "**Description**: More involved with DDL than instructors; teaching, writing, leading research groups, mentoring interns, attending monthly faculty meetings. \r\n\r\n**Responsibilities**: Teach at least one workshop or webinar per year, write at least one blog post every 6 months, and either lead a research group or mentor interns/trainees/apprentices and/or incubator teams every 6 months. \r\n\r\n**Benefits**: Monetary compensation for some activities (ex. teaching, TAing), additional data science learning and experience, promotion of themselves and their knowledge, expanded/stronger network, allowed to sit in on other workshops/webinars (dependent on space, the amount and quality of their contributions, and whether they'd like to TA), invited to DDL social events, invited to monthly faculty events (catered), DDL email address (official affiliation with the organization). \r\n\r\n**Duration**: Ongoing for as long as both parties are interested",
+    "slug": "faculty"
+  },
+  "model": "members.role",
+  "pk": 7
+},
+{
+  "fields": {
+    "name": "Employee",
+    "parent": null,
+    "created": "2015-08-23T15:54:38.807Z",
+    "_details_rendered": "<p><strong>Description</strong>: Work for the company performing a defined role within a business function. </p>\n<p><strong>Responsibilities</strong>: Perform the duties as described in their job description to the absolute best of their abilities. </p>\n<p><strong>Benefits</strong>: Monetary compensation, healthcare and retirement benefits, profit-sharing, etc.</p>\n<p><strong>Duration</strong>: Ongoing until one or both parties terminates employment</p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-23T15:54:38.844Z",
+    "details": "**Description**: Work for the company performing a defined role within a business function. \r\n\r\n**Responsibilities**: Perform the duties as described in their job description to the absolute best of their abilities. \r\n\r\n**Benefits**: Monetary compensation, healthcare and retirement benefits, profit-sharing, etc.\r\n\r\n**Duration**: Ongoing until one or both parties terminates employment",
+    "slug": "employee"
+  },
+  "model": "members.role",
+  "pk": 8
+},
+{
+  "fields": {
+    "name": "Partner",
+    "parent": 8,
+    "created": "2015-08-23T15:55:10.152Z",
+    "_details_rendered": "<p><strong>Description</strong>: Have membership interest in company financial performance and contribute to strategic planning and execution. May also include instructor, faculty, or employee responsibilities. </p>\n<p><strong>Responsibilities</strong>: Attend partner meetings, contribute to strategic planning activities and the execution of organizational strategy. Other duties as necessary. </p>\n<p><strong>Benefits</strong>: Financial stake in company performance plus benefits of all other roles. </p>\n<p><strong>Duration</strong>: Ongoing until interest is sold</p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-23T15:55:10.159Z",
+    "details": "**Description**: Have membership interest in company financial performance and contribute to strategic planning and execution. May also include instructor, faculty, or employee responsibilities. \r\n\r\n**Responsibilities**: Attend partner meetings, contribute to strategic planning activities and the execution of organizational strategy. Other duties as necessary. \r\n\r\n**Benefits**: Financial stake in company performance plus benefits of all other roles. \r\n\r\n**Duration**: Ongoing until interest is sold",
+    "slug": "partner"
+  },
+  "model": "members.role",
+  "pk": 9
+},
+{
+  "fields": {
+    "name": "Organizer",
+    "parent": 3,
+    "created": "2015-08-24T15:44:59.430Z",
+    "_details_rendered": "<p>Organizers put together events and handle space, enrollment, money, and execution of the events. </p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T15:44:59.440Z",
+    "details": "Organizers put together events and handle space, enrollment, money, and execution of the events. ",
+    "slug": "organizer"
+  },
+  "model": "members.role",
+  "pk": 10
+},
+{
+  "fields": {
+    "name": "Teaching Assistant",
+    "parent": 4,
+    "created": "2015-08-24T15:46:41.503Z",
+    "_details_rendered": "<p>A teaching assistant (TA) organizes students during workshops, webinars, and other DDL events. They coordinate questions on Piazza, help facilitate installation and provide technical support. Generally TAs are interns who want to sit in on DDL events for free, or with some nominal salary. </p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T15:46:41.507Z",
+    "details": "A teaching assistant (TA) organizes students during workshops, webinars, and other DDL events. They coordinate questions on Piazza, help facilitate installation and provide technical support. Generally TAs are interns who want to sit in on DDL events for free, or with some nominal salary. ",
+    "slug": "teaching-assistant"
+  },
+  "model": "members.role",
+  "pk": 11
+},
+{
+  "fields": {
+    "name": "Subscriber",
+    "parent": 1,
+    "created": "2015-08-24T16:35:18.285Z",
+    "_details_rendered": "<p>Readers subscribe to email notifications or the blog post feed. Basically we know that they read DDL content. </p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T16:54:24.213Z",
+    "details": "Readers subscribe to email notifications or the blog post feed. Basically we know that they read DDL content. ",
+    "slug": "subscriber"
+  },
+  "model": "members.role",
+  "pk": 12
+}
+]

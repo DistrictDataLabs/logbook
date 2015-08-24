@@ -18,7 +18,8 @@ Admin models for ORM management of the catalog models.
 ##########################################################################
 
 from django.contrib import admin
-from catalog.models import Course, Instructor
+from catalog.models import Course, Instructor, Enrollment
+from catalog.models import Subscription, Publication
 
 ##########################################################################
 ## Inline Adminstration
@@ -27,7 +28,7 @@ from catalog.models import Course, Instructor
 
 class InstructorInline(admin.TabularInline):
     """
-    Inline administration descriptor for profile object
+    Inline administration descriptor for course instructors
     """
 
     model = Instructor
@@ -35,15 +36,29 @@ class InstructorInline(admin.TabularInline):
     verbose_name_plural = 'instructors'
 
 
+class EnrollmentInline(admin.TabularInline):
+    """
+    Inline administration descriptor for course enrollment
+    """
+
+    model = Enrollment
+    extra = 5
+    verbose_name_plural = 'enrollment'
+
+
 class CourseAdmin(admin.ModelAdmin):
     """
     Define new Course admin view
     """
 
-    inlines = (InstructorInline, )
+    inlines = (InstructorInline, EnrollmentInline)
+
 
 ##########################################################################
 ## Register Admin
 ##########################################################################
 
 admin.site.register(Course, CourseAdmin)
+admin.site.register(Enrollment)
+admin.site.register(Subscription)
+admin.site.register(Publication)

@@ -1,0 +1,32 @@
+[
+{
+  "fields": {
+    "name": "New Course Notifications",
+    "created": "2015-08-24T17:04:18.362Z",
+    "_details_rendered": "<p>This subscription is a MailChimp email list where subscribers are emailed when a new course is added to the schedule.</p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T17:04:18.363Z",
+    "link": "",
+    "details": "This subscription is a MailChimp email list where subscribers are emailed when a new course is added to the schedule.",
+    "subscribers": [],
+    "slug": "new-course-notifications"
+  },
+  "model": "catalog.subscription",
+  "pk": 1
+},
+{
+  "fields": {
+    "name": "DDL Blog Syndication",
+    "created": "2015-08-24T17:05:09.673Z",
+    "_details_rendered": "<p>This is an email list on MailChimp that is supported by the RSS feed from the Silvrback block - such that members are emailed when a new blog post is published. </p>",
+    "details_markup_type": "markdown",
+    "modified": "2015-08-24T17:05:09.674Z",
+    "link": "",
+    "details": "This is an email list on MailChimp that is supported by the RSS feed from the Silvrback block - such that members are emailed when a new blog post is published. ",
+    "subscribers": [],
+    "slug": "ddl-blog-syndication"
+  },
+  "model": "catalog.subscription",
+  "pk": 2
+}
+]
