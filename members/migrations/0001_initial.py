@@ -26,6 +26,7 @@ class Migration(migrations.Migration):
                 ('deactivated', models.DateTimeField(default=None, null=True, blank=True)),
             ],
             options={
+                'db_table': 'membership',
                 'get_latest_by': 'created',
             },
         ),
@@ -43,7 +44,7 @@ class Migration(migrations.Migration):
                 ('_biography_rendered', models.TextField(null=True, editable=False)),
             ],
             options={
-                'abstract': False,
+                'db_table': 'member_profiles',
             },
         ),
         migrations.CreateModel(
@@ -60,6 +61,7 @@ class Migration(migrations.Migration):
                 ('parent', models.ForeignKey(related_name='subroles', default=None, blank=True, to='members.Role', null=True)),
             ],
             options={
+                'db_table': 'roles',
                 'get_latest_by': 'created',
             },
         ),

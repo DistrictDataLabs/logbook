@@ -39,6 +39,22 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='Enrollment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, verbose_name='created', editable=False)),
+                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, verbose_name='modified', editable=False)),
+                ('result', models.CharField(default=None, max_length=2, null=True, blank=True, choices=[(b'SC', b'Satisfactory Completion'), (b'I', b'Incomplete'), (b'RE', b'Registered, but Never Attended'), (b'AT', b'Attendance Verfied'), (b'W', b'Withdrawn')])),
+                ('course', models.ForeignKey(to='catalog.Course')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+                'ordering': ('-created',),
+                'db_table': 'enrollment',
+                'get_latest_by': 'created',
+            },
+        ),
+        migrations.CreateModel(
             name='Instructor',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -49,13 +65,24 @@ class Migration(migrations.Migration):
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'abstract': False,
+                'ordering': ('-created',),
+                'db_table': 'instructors',
+                'get_latest_by': 'created',
             },
         ),
         migrations.AddField(
             model_name='course',
             name='instructors',
-            field=models.ManyToManyField(related_name='courses', through='catalog.Instructor', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(related_name='taught_courses', through='catalog.Instructor', to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AddField(
+            model_name='course',
+            name='students',
+            field=models.ManyToManyField(related_name='enrolled_courses', through='catalog.Enrollment', to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AlterUniqueTogether(
+            name='instructor',
+            unique_together=set([('user', 'course', 'role')]),
         ),
         migrations.AlterUniqueTogether(
             name='course',

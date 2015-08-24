@@ -110,6 +110,12 @@ class Instructor(TimeStampedModel):
     user   = models.ForeignKey('auth.User')
     role   = models.ForeignKey('members.Role', related_name='+')
 
+    class Meta:
+        db_table = 'instructors'
+        ordering = ('-created',)
+        get_latest_by   = 'created'
+        unique_together = ('user', 'course', 'role')
+
     def __unicode__(self):
         return "{} teaching {}".format(self.user.full_name(), self.course)
 
@@ -131,6 +137,11 @@ class Enrollment(TimeStampedModel):
     course = models.ForeignKey('catalog.Course')
     user   = models.ForeignKey('auth.User')
     result = models.CharField(max_length=2, choices=GRADES, **nullable)
+
+    class Meta:
+        db_table = 'enrollment'
+        ordering = ('-created',)
+        get_latest_by   = 'created'
 
     def __unicode__(self):
         return "{} enrolled in {}".format(self.user.full_name(), self.course)
