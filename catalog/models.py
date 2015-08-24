@@ -38,7 +38,7 @@ class DDLEvent(TimeStampedModel):
     slug     = AutoSlugField(populate_from='name', unique=True)
     begins   = models.DateTimeField(**nullable)
     finishes = models.DateTimeField(**nullable)
-    details  =  MarkupField(markup_type='markdown', help_text='Edit in Markdown', **nullable)
+    details  = MarkupField(markup_type='markdown', help_text='Edit in Markdown', **nullable)
 
     class Meta:
         abstract = True
@@ -148,3 +148,47 @@ class Enrollment(TimeStampedModel):
 
     def __unicode__(self):
         return "{} enrolled in {}".format(self.user.profile.full_name, self.course)
+
+
+##########################################################################
+## Subscriptions and Blog Posts
+##########################################################################
+
+class Subscription(TimeStampedModel):
+    """
+    A subscription service is a newsletter or RSS feed that DDL members can
+    subscribe to. Subscriptions make the user a DDL reader (see roles).
+    """
+
+    name     = models.CharField(max_length=255)
+    slug     = AutoSlugField(populate_from='name', unique=True)
+    details  = MarkupField(markup_type='markdown', help_text='Edit in Markdown', **nullable)
+    link     = models.URLField(**nullable)
+    subscribers = models.ManyToManyField('auth.User', related_name='subscriptions', blank=True)
+
+    class Meta:
+        db_table = 'subscriptions'
+
+    def __unicode__(self):
+        return self.name
+
+class Publication(TimeStampedModel):
+    """
+    A publication is a blog post, an article, tutorial or some writing that has
+    been contributed by DDL authors (see roles).
+    """
+
+    TYPES    = Choices('blog', 'tutorial', 'paper', 'slides', 'book')
+
+    title    = models.CharField(max_length=255)
+    slug     = AutoSlugField(populate_from='title', unique=True)
+    link     = models.URLField(**nullable)
+    pubdate  = models.DateField(**nullable)
+    pubtype  = models.CharField(max_length=12, choices=TYPES, default=TYPES.blog)
+    authors  = models.ManyToManyField('auth.User', related_name='publications', blank=True)
+
+    class Meta:
+        db_table = 'publications'
+
+    def __unicode__(self):
+        return self.title

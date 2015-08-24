@@ -19,6 +19,7 @@ Admin models for ORM management of the catalog models.
 
 from django.contrib import admin
 from catalog.models import Course, Instructor, Enrollment
+from catalog.models import Subscription, Publication
 
 ##########################################################################
 ## Inline Adminstration
@@ -59,3 +60,5 @@ class CourseAdmin(admin.ModelAdmin):
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Enrollment)
+admin.site.register(Subscription)
+admin.site.register(Publication)

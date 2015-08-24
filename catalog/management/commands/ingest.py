@@ -26,6 +26,7 @@ from django.utils import timezone
 from datetime import datetime, time
 from django.contrib.auth.models import User
 from catalog.models import Course, Enrollment, Instructor
+from catalog.models import Subscription, Publication
 from members.models import Role, Membership
 from django.core.management.base import BaseCommand, CommandError
 
@@ -74,7 +75,8 @@ class Command(BaseCommand):
             return user
 
         if not full_name:
-            raise ValueError("No full name was supplied!")
+            counts["Couldn't create user: No full name was supplied"] +=1
+            return None
 
         # Create the user since we couldn't find them
         kwargs = {
@@ -130,6 +132,9 @@ class Command(BaseCommand):
             'taughtworkshop': self.handle_instructor,
             'taforworkshop': self.handle_instructor,
             'organizedworkshop': self.handle_instructor,
+            'signedupfornewcoursenotifications': self.handle_subscription,
+            'subscribedtoddlblog': self.handle_subscription,
+            'wroteblogpost': self.handle_publication,
         }
 
         # Parse the activity csv file
@@ -245,3 +250,65 @@ class Command(BaseCommand):
             counts['New {} role added'.format(role)] += 1
         else:
             counts['Duplicate {} role detected'.format(role)] += 1
+
+    def handle_publication(self, row, counts):
+        """
+        Handles the publication action for authors. Right now this only works
+        with blog posts and the authors that write those posts.
+        """
+
+        # Assign the author membership to the user
+        membership, created = Membership.objects.get_or_create(
+            role=Role.objects.get(slug="blog-author"), profile=row['User'].profile
+        )
+        if created:
+            counts['New blog author role added'] += 1
+        else:
+            counts['Duplicate blog author role detected'] += 1
+
+        # Attempt to fetch the publication from the name.
+        pub, created = Publication.objects.get_or_create(
+            title=row['Detail'], pubdate=row['ActionDate'].date()
+        )
+
+        if created:
+            counts['New publication added'] += 1
+            print "Created publication: {}".format(pub)
+        else:
+            counts['Duplicate publication detected'] += 1
+
+        # Add the author relationship to the publication
+        if pub.authors.filter(username=row['User'].username).exists():
+            counts['Duplicate author not added to publication'] += 1
+        else:
+            pub.authors.add(row['User'])
+            counts['Added author to publication'] += 1
+
+    def handle_subscription(self, row, counts):
+        """
+        Handles the subscription action for email addresses.
+        """
+
+        # Assign the subscriber membership to the user
+        membership, created = Membership.objects.get_or_create(
+            role=Role.objects.get(slug="subscriber"), profile=row['User'].profile
+        )
+        if created:
+            counts['New subscriber role added'] += 1
+        else:
+            counts['Duplicate subscriber role detected'] += 1
+
+        # Find subscription in database
+        slug = {
+            'signedupfornewcoursenotifications': 'new-course-notifications',
+            'subscribedtoddlblog': 'ddl-blog-syndication',
+        }[normalize(row['Action'])]
+
+        sub = Subscription.objects.get(slug=slug)
+
+        # Add the subscriber relationship to the subscription
+        if sub.subscribers.filter(username=row['User'].username).exists():
+            counts['Duplicate subscriber not added to subscription'] += 1
+        else:
+            sub.subscribers.add(row['User'])
+            counts['Added subscriber to {}'.format(sub)] += 1
