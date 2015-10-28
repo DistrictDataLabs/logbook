@@ -111,6 +111,10 @@ class Profile(TimeStampedModel):
     def gravatar_icon(self):
         return self.get_gravatar_url(size=settings.GRAVATAR_ICON_SIZE)
 
+    @property
+    def gravatar_badge(self):
+        return self.get_gravatar_url(size=64)
+
     def get_gravatar_url(self, size=None, default=None):
         """
         Comptues the gravatar url from an email address
@@ -128,6 +132,12 @@ class Profile(TimeStampedModel):
         Returns the API detail endpoint for the object
         """
         return reverse('api:user-detail', args=(self.user.pk,))
+
+    def get_absolute_url(self):
+        """
+        Returns the detail view url for the object
+        """
+        return reverse('member-detail', args=(self.user.username,))
 
     def __unicode__(self):
         return self.full_email

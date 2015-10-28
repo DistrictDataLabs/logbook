@@ -51,6 +51,10 @@ urlpatterns = [
     url(r'^terms/$', TemplateView.as_view(template_name='site/legal/terms.html'), name='terms'),
     url(r'^privacy/$', TemplateView.as_view(template_name='site/legal/privacy.html'), name='privacy'),
 
+    # Members URLs
+    url(r'^members/$', MemberListView.as_view(), name='member-list'),
+    url(r'^members/(?P<slug>[\w-]+)/$', MemberView.as_view(), name='member-detail'),
+
     # Authentication URLs
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('^accounts/', include('django.contrib.auth.urls')),

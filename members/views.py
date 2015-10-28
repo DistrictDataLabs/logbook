@@ -21,6 +21,11 @@ from braces.views import LoginRequiredMixin
 from members.permissions import IsAdminOrSelf
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.contrib.auth.models import User
+
+from members.models import Role
 
 from rest_framework import status
 from rest_framework import viewsets
@@ -48,6 +53,44 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context['user'] = self.request.user
 
         return context
+
+
+class MemberListView(LoginRequiredMixin, ListView):
+    """
+    Listing and ordering of DDL members and their roles.
+    """
+
+    model = User
+    template_name = "members/member_list.html"
+    context_object_name = "member_list"
+    paginate_by = 50
+
+    def get_queryset(self):
+        queryset = super(MemberListView, self).get_queryset()
+        queryset = queryset.order_by('last_name')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(MemberListView, self).get_context_data(**kwargs)
+        context['member_count'] = User.objects.count()
+        context['member_latest'] = User.objects.order_by('-date_joined')[0].date_joined
+        context['roles'] = Role.objects.all()
+
+        return context
+
+
+class MemberView(LoginRequiredMixin, DetailView):
+    """
+    A detail view of a user and their DDL participation. This view is very
+    similar to a profile view except that it does not include the admin or
+    personal aspects of the profile.
+    """
+
+    model = User
+    template_name = "members/member_detail.html"
+    context_object_name = 'member'
+    slug_field  = "username"
+
 
 ##########################################################################
 ## API HTTP/JSON Views

@@ -16,7 +16,7 @@
       <!-- Breadcrumbs navigation area -->
       <div class="col-sm-12">
         <ol class="breadcrumb">
-          <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+          <li class="active"><i class="fa fa-home"></i> Home</li>
         </ol>
       </div>
 
@@ -80,7 +80,7 @@
               <tr>
                 <td>{{ course.name }}</td>
                 <td>{{ course.begins }}</td>
-                <td>{% for i in course.instructors.all %}{% if not forloop.first %}, {% endif %}{{ i.profile.full_name }}{% endfor %}</td>
+                <td>{% for i in course.instructors.all %}{% if not forloop.first %}, {% endif %}<a href="{{ i.profile.get_absolute_url }}">{{ i.profile.full_name }}</a>{% endfor %}</td>
                 <td class="text-center">{{ course.students.count }}</td>
               </tr>
               {% empty %}
@@ -112,7 +112,7 @@
                 <td>{{ pub.title }}</td>
                 <td>{{ pub.pubdate }}</td>
                 <td>{{ pub.get_pubtype_display|title }}</td>
-                <td>{% for a in pub.authors.all %}{% if not forloop.first %}, {% endif %}{{ a.profile.full_name }}{% endfor %}</td>
+                <td>{% for a in pub.authors.all %}{% if not forloop.first %}, {% endif %}<a href="{{ a.profile.get_absolute_url }}">{{ a.profile.full_name }}</a>{% endfor %}</td>
               </tr>
               {% empty %}
               <tr>
