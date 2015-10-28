@@ -1,4 +1,4 @@
-<nav>
+<nav class="text-center">
   <ul class="pagination">
     <li {% if not page_obj.has_previous %}class="disabled"{% endif %}>
       <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}" aria-label="Previous">

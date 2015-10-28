@@ -111,6 +111,10 @@ class Profile(TimeStampedModel):
     def gravatar_icon(self):
         return self.get_gravatar_url(size=settings.GRAVATAR_ICON_SIZE)
 
+    @property
+    def gravatar_badge(self):
+        return self.get_gravatar_url(size=64)
+
     def get_gravatar_url(self, size=None, default=None):
         """
         Comptues the gravatar url from an email address
