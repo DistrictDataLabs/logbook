@@ -59,7 +59,7 @@
           </li>
           <li>
             <a href="#">
-              <span class="statistic">{{ member.taught_courses.count }}</span>
+              <span class="statistic">{{ member.taught_courses.count|add:member.enrolled_courses.count }}</span>
               <span class="statlabel">courses</span>
             </a>
           </li>
@@ -113,7 +113,35 @@
             </div>
             {% endif %}
 
-            <!-- Courses table -->
+            <!-- Courses Taken table -->
+            {% if member.enrolled_courses.count > 0 %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">Courses Taken</h4>
+              </div>
+              <table class="table table-striped table-hover">
+                <thead>
+                  <th>Name</th>
+                  <th>Date</th>
+                </thead>
+                <tbody>
+                  {% for course in member.enrolled_courses.all %}
+                  <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.begins }}</td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="4">No courses taken</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% endif %}
+
+            <!-- Courses Taught table -->
+            {% if member.taught_courses.count > 0 %}
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">Courses Taught</h4>
@@ -141,6 +169,7 @@
                 </tbody>
               </table>
             </div>
+            {% endif %}
 
             <!-- Two column rows and publications -->
             <div class="row">
