@@ -129,5 +129,11 @@ class Profile(TimeStampedModel):
         """
         return reverse('api:user-detail', args=(self.user.pk,))
 
+    def get_absolute_url(self):
+        """
+        Returns the detail view url for the object
+        """
+        return reverse('member-detail', args=(self.user.pk,))
+
     def __unicode__(self):
         return self.full_email

@@ -21,6 +21,9 @@ from braces.views import LoginRequiredMixin
 from members.permissions import IsAdminOrSelf
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.contrib.auth.models import User
 
 from rest_framework import status
 from rest_framework import viewsets
@@ -48,6 +51,30 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context['user'] = self.request.user
 
         return context
+
+
+class MemberListView(LoginRequiredMixin, ListView):
+    """
+    Listing and ordering of DDL members and their roles.
+    """
+
+    model = User
+    template_name = "members/member_list.html"
+    context_object_name = "member_list"
+    paginate_by = 50
+
+
+class MemberView(LoginRequiredMixin, DetailView):
+    """
+    A detail view of a user and their DDL participation. This view is very
+    similar to a profile view except that it does not include the admin or
+    personal aspects of the profile.
+    """
+
+    model = User
+    template_name = "members/member_detail.html"
+    context_object_name = 'member'
+
 
 ##########################################################################
 ## API HTTP/JSON Views

@@ -1,0 +1,25 @@
+{% extends 'page.html' %}
+
+{% block content %}
+
+  <div class="container">
+
+    <div class="row">
+
+      <ul>
+      {% for member in member_list %}
+      <li><a href="{{ member.profile.get_absolute_url }}">{{ member }}</a></li>
+      {% empty %}
+      <li>No members added quite yet</li>
+      {% endfor %}
+      </ul>
+
+      {% if is_paginated %}
+        {% include 'components/pagination.html' %}
+      {% endif %}
+
+    </div><!-- row ends -->
+
+  </div><!-- container ends -->
+
+{% endblock %}
