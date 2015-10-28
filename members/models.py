@@ -137,7 +137,7 @@ class Profile(TimeStampedModel):
         """
         Returns the detail view url for the object
         """
-        return reverse('member-detail', args=(self.user.pk,))
+        return reverse('member-detail', args=(self.user.username,))
 
     def __unicode__(self):
         return self.full_email

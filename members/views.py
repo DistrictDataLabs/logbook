@@ -63,7 +63,7 @@ class MemberListView(LoginRequiredMixin, ListView):
     model = User
     template_name = "members/member_list.html"
     context_object_name = "member_list"
-    paginate_by = 60
+    paginate_by = 50
 
     def get_queryset(self):
         queryset = super(MemberListView, self).get_queryset()
@@ -89,6 +89,7 @@ class MemberView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "members/member_detail.html"
     context_object_name = 'member'
+    slug_field  = "username"
 
 
 ##########################################################################

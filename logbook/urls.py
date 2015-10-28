@@ -53,7 +53,7 @@ urlpatterns = [
 
     # Members URLs
     url(r'^members/$', MemberListView.as_view(), name='member-list'),
-    url(r'^members/(?P<pk>\d+)/$', MemberView.as_view(), name='member-detail'),
+    url(r'^members/(?P<slug>[\w-]+)/$', MemberView.as_view(), name='member-detail'),
 
     # Authentication URLs
     url('', include('social.apps.django_app.urls', namespace='social')),
