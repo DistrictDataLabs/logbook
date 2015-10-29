@@ -18,5 +18,45 @@ Testing library for the Catalog app.
 ##########################################################################
 
 from django.test import TestCase
+from catalog.parser import ActivityParser
+from catalog.parser import normalize, slugify
 
-# Create your tests here.
+##########################################################################
+## Parsing Test Cases
+##########################################################################
+
+
+class ParsingTests(TestCase):
+
+    def test_slugify(self):
+        """
+        Check that the slugify function works appropriately.
+        """
+
+        cases = (
+            u'bob sled',
+            u'B!ob "@Sled.?!',
+            u'bob-sled',
+            u'BOB-SLED',
+            u'bob                sled',
+            u"b'ob sled.",
+        )
+
+        for case in cases:
+            self.assertEqual(slugify(case), u'bob-sled')
+
+    def test_normalize(self):
+        """
+        Check that the normalize function works correctly.
+        """
+
+        cases = (
+            u'bob sled',
+            u'bobsled',
+            u'BOB  SLED',
+            u'bob                sled',
+            u'BOB   sled',
+        )
+
+        for case in cases:
+            self.assertEqual(normalize(case), u'bobsled')
