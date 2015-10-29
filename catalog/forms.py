@@ -18,10 +18,13 @@ Forms and other HTML data handling from the web front end.
 ##########################################################################
 
 from django import forms
+from catalog.parser import ActivityParser
+
 
 ##########################################################################
-## Upload Form
+## Module Constants
 ##########################################################################
+
 
 DATASET_ERROR_MSGS = {
     "required": "Please select an activity dataset to upload.",
@@ -30,6 +33,11 @@ DATASET_ERROR_MSGS = {
     "empty": "The uploaded activity dataset is empty, cannot upload.",
     "max_length": "The activity dataset is too big, please submit a smaller CSV.",
 }
+
+##########################################################################
+## Upload Form
+##########################################################################
+
 
 class DatasetUploadForm(forms.Form):
     """
@@ -44,7 +52,14 @@ class DatasetUploadForm(forms.Form):
 
     def save(self):
         """
-        Save the dataset to S3
+        Parse the dataset
         """
-        import time
-        time.sleep(5)
+        parser  = ActivityParser()
+        dataset = self.cleaned_data['dataset']
+
+        # Execute the parsing
+        dataset.open('rb')
+        counts  = parser.parse(dataset)
+        dataset.close()
+
+        return counts

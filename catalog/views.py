@@ -17,6 +17,9 @@ Views for the Catalog app
 ## Imports
 ##########################################################################
 
+import time
+
+from operator import itemgetter
 from django.contrib import messages
 from braces.views import LoginRequiredMixin
 from django.views.generic.edit import FormView
@@ -41,8 +44,17 @@ class DatasetUploadView(LoginRequiredMixin, FormView):
         return kwargs
 
     def form_valid(self, form):
-        form.save()
-        messages.success(self.request, 'Dataset added to the LogBook.')
+        print "FORM VALID"
+        start   = time.time()
+        counts  = form.save()
+
+        message = (
+            'Read {:,d} rows in the uploaded dataset in {:0.3f} seconds.'
+            .format(counts.pop('rows'), time.time() - start)
+        )
+
+        messages.success(self.request, message)
+        self.request.session['report'] = sorted(counts.items(), key=itemgetter(0))
         return super(DatasetUploadView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -50,4 +62,6 @@ class DatasetUploadView(LoginRequiredMixin, FormView):
         Add ten most recent uploads to context
         """
         context = super(DatasetUploadView, self).get_context_data(**kwargs)
+        context['report'] = self.request.session.pop("report", [])
+
         return context

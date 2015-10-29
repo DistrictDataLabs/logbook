@@ -53,48 +53,67 @@
 
         <!-- Upload Panel -->
         <div class="col-xs-12">
-        <div class="panel panel-default">
-				  <div class="panel-heading">
-            <h3 class="panel-title">Upload Activity Dataset</h3>
-          </div>
-				  <div class="panel-body">
-            <form class="dataset-upload-form" action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
+          <div class="panel panel-default">
+  				  <div class="panel-heading">
+              <h3 class="panel-title">Upload Activity Dataset</h3>
+            </div>
+  				  <div class="panel-body">
+              <form class="dataset-upload-form" action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
 
-              <div class="input-group image-preview">
-						    <input placeholder="" type="text" class="form-control image-preview-filename" disabled="disabled">
-						    <span class="input-group-btn">
-						      <!-- image-preview-clear button -->
-						      <button type="button" class="btn btn-default image-preview-clear hidden">
-                    <i class="fa fa-trash"></i> Clear
-                  </button>
+                <div class="input-group image-preview">
+  						    <input placeholder="" type="text" class="form-control image-preview-filename" disabled="disabled">
+  						    <span class="input-group-btn">
+  						      <!-- image-preview-clear button -->
+  						      <button type="button" class="btn btn-default image-preview-clear hidden">
+                      <i class="fa fa-trash"></i> Clear
+                    </button>
 
-                  <!-- image-preview-input -->
-                  <!-- Cleverly hide a file upload button in front of another button -->
-						      <div class="btn btn-default image-preview-input">
-                    <i class="fa fa-folder-open"></i> <span class="image-preview-input-title">Browse</span>
-							      <input type="file" accept="text/csv, application/csv, application/vnd.ms-excel" name="dataset"/>
-						      </div>
+                    <!-- image-preview-input -->
+                    <!-- Cleverly hide a file upload button in front of another button -->
+  						      <div class="btn btn-default image-preview-input">
+                      <i class="fa fa-folder-open"></i> <span class="image-preview-input-title">Browse</span>
+  							      <input type="file" accept="text/csv, application/csv, application/vnd.ms-excel" name="dataset"/>
+  						      </div>
 
-                  <!-- Upload button -->
-                  <button type="submit" class="btn btn-labeled btn-default">
-                    <span class="btn-label"><i class="fa fa-upload"></i> </span>Upload</button>
-						    </span>
+                    <!-- Upload button -->
+                    <button type="submit" class="btn btn-labeled btn-default">
+                      <span class="btn-label"><i class="fa fa-upload"></i> </span>Upload</button>
+  						    </span>
+                </div>
+                {% csrf_token %}
+              </form>
+
+    					<!-- Drop Zone -->
+              <form id="dropForm" class="dataset-upload-form" action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
+    					<div class="upload-drop-zone" id="drop-zone">
+                Or drag and drop dataset here
+                <input type="file" name="dataset" />
               </div>
               {% csrf_token %}
-            </form>
+              </form>
 
-  					<!-- Drop Zone -->
-            <form id="dropForm" class="dataset-upload-form" action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
-  					<div class="upload-drop-zone" id="drop-zone">
-              Or drag and drop dataset here
-              <input type="file" name="dataset" />
+    				</div><!-- upload panel body ends -->
+          </div><!-- upload panel ends -->
+        </div><!-- upload panel row ends -->
+
+        {% if report %}
+        <div class="col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Upload Activity Report</h3>
             </div>
-            {% csrf_token %}
-            </form>
+            <ul class="list-group">
+            {% for item, count in report %}
+              <li class="list-group-item">
+                <span class="badge">{{ count }}</span>
+                {{ item }}
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
 
-  				</div><!-- upload panel body ends -->
-        </div><!-- upload panel ends -->
-      </div>
 
       </div><!-- primary content area ends -->
     </div><!-- container ends -->
