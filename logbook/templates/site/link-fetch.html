@@ -1,0 +1,98 @@
+{% extends 'page.html' %}
+{% load staticfiles %}
+
+{% block stylesheets %}
+  {{ block.super }}
+  <style type="text/css">
+    #loading-overlay {
+      position: fixed;
+      width: 100%;
+      height:100%;
+      display: flex;
+      align-items: center;
+      top: 0;
+      background-color: #333;
+      opacity: 0.75;
+      z-index: 9999;
+    }
+
+    .plus {
+      display: flex;
+      margin: 0 auto;
+      font-size: 36px;
+      color: #FFF;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+      <!-- Primary content area -->
+      <div class="row">
+
+        <!-- Page Title Area -->
+        <div class="col-xs-12">
+          <div class="page-header">
+            <h2>Fetch Publication by URL</h2>
+          </div>
+        </div>
+
+        <!-- Breadcrumbs navigation area -->
+        <div class="col-sm-12">
+          <ol class="breadcrumb">
+            <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="{% url 'upload' %}"><i class="fa fa-upload"></i> Upload</a></li>
+            <li class="active"><i class="fa fa-link"></i> Link Fetch</li>
+          </ol>
+        </div>
+
+        <!-- Alerts and Messages -->
+        {% include 'components/form-alerts.html' %}
+
+        <!-- Link Fetch Form -->
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">Add Publication by Link</h4>
+            </div>
+            <div class="panel-body">
+              <form action="" method="POST">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="link" id="id_link" placeholder="Enter URL of Publication">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Submit</button>
+                  </span>
+                </div><!-- /input-group -->
+                {% csrf_token %}
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- primary content area ends -->
+    </div><!-- container ends -->
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="hidden">
+      <div class="plus">
+        <i class="fa fa-spin fa-spinner"></i>
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ block.super }}
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      // add the loading context to the screen.
+      function loading() {
+        $("#loading-overlay").removeClass("hidden");
+      }
+
+      console.log("Trinket Uploader is started and ready!");
+    });
+  </script>
+{% endblock %}

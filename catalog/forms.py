@@ -63,3 +63,11 @@ class DatasetUploadForm(forms.Form):
         dataset.close()
 
         return counts
+
+
+class LinkFetchForm(forms.Form):
+    """
+    Submit a URL to lookup the publication.
+    """
+
+    link   = forms.URLField(required=True)
