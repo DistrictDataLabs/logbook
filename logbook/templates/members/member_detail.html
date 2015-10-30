@@ -194,11 +194,17 @@
                   <div class="panel-heading">
                     <h4 class="panel-title">Publications</h4>
                   </div>
-                  {% for pub in member.publications.all %}
-                  <li class="list-group-item">{{ pub }}</li>
-                  {% empty %}
-                  <li class="list-group-item">No publications</li>
-                  {% endfor %}
+                  <ul class="list-group">
+                    {% for pub in member.publications.all %}
+                    {% if pub.link %}
+                    <a class="list-group-item" href="{{ pub.link }}" title="{{ pub.title }}" target="_blank">{{ pub.title }}</a>
+                    {% else %}
+                    <li class="list-group-item">{{ pub.title }}</li>
+                    {% endif %}
+                    {% empty %}
+                    <li class="list-group-item">No publications</li>
+                    {% endfor %}
+                  </ul>
                 </div>
               </div>
 
