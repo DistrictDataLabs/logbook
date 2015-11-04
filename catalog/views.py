@@ -24,6 +24,8 @@ from django.contrib import messages
 from braces.views import LoginRequiredMixin
 from django.views.generic.edit import FormView
 from catalog.forms import DatasetUploadForm
+from catalog.forms import LinkFetchForm
+from django.core.urlresolvers import reverse_lazy
 
 ##########################################################################
 ## HTML/Web Views
@@ -32,8 +34,8 @@ from catalog.forms import DatasetUploadForm
 class DatasetUploadView(LoginRequiredMixin, FormView):
 
     template_name = "site/upload.html"
-    form_class = DatasetUploadForm
-    success_url = "/upload"
+    form_class    = DatasetUploadForm
+    success_url   = reverse_lazy("upload")
 
     def get_form_kwargs(self):
         """
@@ -44,9 +46,13 @@ class DatasetUploadView(LoginRequiredMixin, FormView):
         return kwargs
 
     def form_valid(self, form):
-        print "FORM VALID"
-        start   = time.time()
-        counts  = form.save()
+
+        try:
+            start   = time.time()
+            counts  = form.save()
+        except ValueError as e:
+            messages.warning(self.request, str(e))
+            return super(DatasetUploadView, self).form_valid(form)
 
         message = (
             'Read {:,d} rows in the uploaded dataset in {:0.3f} seconds.'
@@ -65,3 +71,27 @@ class DatasetUploadView(LoginRequiredMixin, FormView):
         context['report'] = self.request.session.pop("report", [])
 
         return context
+
+
+class PublicationLinkFetch(LoginRequiredMixin, FormView):
+
+    template_name = "site/link-fetch.html"
+    form_class    = LinkFetchForm
+    success_url   = reverse_lazy("upload-link")
+
+    def form_valid(self, form):
+        try:
+            pub, created = form.save()
+            verb = "Added" if created else "Updated"
+
+            message = (
+                "{} publication \"{}\" by {}"
+                .format(verb, pub.title, pub.byline)
+            )
+
+            messages.success(self.request, message)
+
+        except Exception as e:
+            messages.warning(self.request, str(e))
+
+        return super(PublicationLinkFetch, self).form_valid(form)

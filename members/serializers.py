@@ -35,7 +35,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model  = Profile
-        fields = ('biography', 'gravatar', 'location', 'organization')
+        fields = ('biography', 'gravatar', 'location', 'organization', 'twitter', 'linkedin')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

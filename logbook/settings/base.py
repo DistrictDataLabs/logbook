@@ -265,3 +265,13 @@ REST_FRAMEWORK = {
     'PAGINATE_BY_PARAM': 'per_page',
     'MAX_PAGINATE_BY': 200,
 }
+
+##########################################################################
+## Valid Publication URLs
+##########################################################################
+
+PUBLICATION_DOMAINS = frozenset((
+    'districtdatalabs.silvrback.com',
+    'www.districtdatalabs.com',
+    'districtdatalabs.com',
+))

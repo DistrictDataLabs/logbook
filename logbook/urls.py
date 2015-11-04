@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^terms/$', TemplateView.as_view(template_name='site/legal/terms.html'), name='terms'),
     url(r'^privacy/$', TemplateView.as_view(template_name='site/legal/privacy.html'), name='privacy'),
     url(r'^upload/$', DatasetUploadView.as_view(), name='upload'),
+    url(r'^upload/link-fetch/$', PublicationLinkFetch.as_view(), name='upload-link'),
 
     # Members URLs
     url(r'^members/$', MemberListView.as_view(), name='member-list'),

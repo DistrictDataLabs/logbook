@@ -33,6 +33,7 @@ html5lib==0.999999
 chardet==2.3.0
 unicodecsv==0.14.1
 python-dateutil==2.4.2
+beautifulsoup4==4.4.1
 six==1.9.0
 
 ## Testing
