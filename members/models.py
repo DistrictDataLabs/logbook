@@ -100,7 +100,7 @@ class Profile(TimeStampedModel):
 
     @property
     def full_email(self):
-        email = "{} <{}>".format(self.full_name, self.user.email)
+        email = u"{} <{}>".format(self.full_name, self.user.email)
         return email.strip()
 
     @property
