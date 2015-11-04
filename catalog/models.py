@@ -194,3 +194,18 @@ class Publication(TimeStampedModel):
 
     def __unicode__(self):
         return self.title
+
+    @property
+    def byline(self):
+        """
+        Returns the comma separated byline for the authors.
+        """
+        num_authors = self.authors.count()
+
+        # Handle various counts of authors
+        if num_authors == 1:
+            return self.authors.first().profile.full_name
+        elif num_authors == 2:
+            return " and ".join([a.profile.full_name for a in self.authors.all()])
+        else:
+            return "{}, et al.".format(self.authors.first().last_name)

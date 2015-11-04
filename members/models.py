@@ -89,6 +89,8 @@ class Profile(TimeStampedModel):
     organization = models.CharField(max_length=255, **nullable)
     location     = models.CharField(max_length=255, **nullable)
     biography    = MarkupField(markup_type='markdown', help_text='Edit in Markdown', **nullable)
+    twitter      = models.CharField(max_length=100, **nullable)
+    linkedin     = models.URLField(**nullable)
     roles        = models.ManyToManyField('members.Role', through='members.Membership', related_name='members')
 
     class Meta:

@@ -78,3 +78,20 @@ class PublicationLinkFetch(LoginRequiredMixin, FormView):
     template_name = "site/link-fetch.html"
     form_class    = LinkFetchForm
     success_url   = reverse_lazy("upload-link")
+
+    def form_valid(self, form):
+        try:
+            pub, created = form.save()
+            verb = "Added" if created else "Updated"
+
+            message = (
+                "{} publication \"{}\" by {}"
+                .format(verb, pub.title, pub.byline)
+            )
+
+            messages.success(self.request, message)
+
+        except Exception as e:
+            messages.warning(self.request, str(e))
+
+        return super(PublicationLinkFetch, self).form_valid(form)
