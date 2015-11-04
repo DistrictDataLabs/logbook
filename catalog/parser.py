@@ -19,6 +19,7 @@ Parses CSV activity logs as created by Tony and adds to the database.
 
 import re
 import sys
+import chardet
 import unicodedata
 import unicodecsv as csv
 
@@ -67,6 +68,15 @@ def slugify(text):
     text = re.sub("\s\s+", " ", text)
     text = text.lower().replace(" ", "-")
     return text.translate(PUNCTUATION)
+
+
+def detect_encoding(fh):
+    """
+    Detects the encoding of an open file handle, seeking back to the start.
+    """
+    encoding = chardet.detect(fh.read())
+    fh.seek(0) # Move the file handle back ot the beginning
+    return encoding.get('encoding', 'utf-8')
 
 
 ##########################################################################
@@ -122,7 +132,7 @@ class ActivityParser(object):
         """
         Handle an individual CSV file and associated errors and counts.
         """
-        reader = csv.DictReader(data)
+        reader = csv.DictReader(data, encoding=detect_encoding(data))
         counts = Counter()
 
         # Check for missing expected fields
