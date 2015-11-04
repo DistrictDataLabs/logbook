@@ -42,6 +42,26 @@
               <i class="fa fa-envelope"></i>
               <span id="profileEmail">{{ member.email }}</span>
           </li>
+          <li id="userTwitter">
+              <i class="fa fa-twitter"></i>
+              {% if member.profile.twitter %}
+              <a id="profileTwitterA" href="https://twitter.com/{{ member.profile.twitter }}/" target="_blank">
+                <span id="profileTwitter">@{{ member.profile.twitter }}</span>
+              </a>
+              {% else %}
+              <span id="profileTwitter">Not Added</span>
+              {% endif %}
+          </li>
+          <li id="userLinkedIn">
+              <i class="fa fa-linkedin"></i>
+              {% if member.profile.linkedin %}
+              <a id="profileLinkedInA" href="{{ member.profile.linkedin }}/" target="_blank">
+                <span id="profileLinkedIn">{{ member.last_name }} Profile</span>
+              </a>
+              {% else %}
+              <span id="profileLinkedIn">Not Added</span>
+              {% endif %}
+          </li>
           <li id="userJoined">
               <i class="fa fa-clock-o"></i>
               Joined on {{ member.date_joined|date }}
@@ -260,12 +280,16 @@
                 data.profile = {
                     "biography": data.biography,
                     "organization": data.organization,
-                    "location": data.location
+                    "location": data.location,
+                    "twitter": data.twitter,
+                    "linkedin": data.linkedin
                 };
 
                 delete data.biography;
                 delete data.organization;
                 delete data.location;
+                delete data.twitter;
+                delete data.linkedin;
 
                 $.ajax({
                     "url": userDetail,
@@ -279,6 +303,10 @@
                     $("#profileEmail").text(data.email);
                     $("#profileOrganization").text(data.profile.organization);
                     $("#profileLocation").text(data.profile.location);
+                    $("#profileTwitter").text("@" + data.profile.twitter);
+                    $("#profileTwitterA").attr("href", "https://twitter.com/" + data.profile.twitter + "/");
+                    $("#profileLinkedIn").text(data.last_name + " Profile");
+                    $("#profileLinkedInA").attr("href", data.profile.linkedin);
                     $("#editProfileModal").modal("hide");
                 }).fail(function(xhr) {
                     data = xhr.responseJSON;
