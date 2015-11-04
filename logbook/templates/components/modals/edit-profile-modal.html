@@ -32,12 +32,28 @@
           </div>
           <div class="form-group">
             <label for="organization">Organization</label>
-            <input type="text" class="form-control" value="{{ user.profile.organization }}" placeholder="Organization" id="organization" name="organization">
+            <input type="text" class="form-control" value="{% if user.profile.organization %}{{ user.profile.organization }}{% endif %}" placeholder="Organization" id="organization" name="organization">
             <span class="help-block"></span>
           </div>
           <div class="form-group">
             <label for="organization">Location</label>
-            <input type="text" class="form-control" value="{{ user.profile.location }}" placeholder="Location" id="location" name="location">
+            <input type="text" class="form-control" value="{% if user.profile.location %}{{ user.profile.location }}{% endif %}" placeholder="Location" id="location" name="location">
+            <span class="help-block"></span>
+          </div>
+          <div class="form-group">
+            <label for="organization">Twitter</label>
+            <div class="input-group">
+              <span class="input-group-addon" id="twitter-addon1">@</span>
+              <input type="text" class="form-control" value="{% if user.profile.twitter %}{{ user.profile.twitter }}{% endif %}" placeholder="Handle" id="twitter" name="twitter">
+            </div>
+            <span class="help-block"></span>
+          </div>
+          <div class="form-group">
+            <label for="organization">linkedin</label>
+            <div class="input-group">
+              <span class="input-group-addon" id="linked-addon1"><i class="fa fa-linkedin"></i></span>
+              <input type="text" class="form-control" value="{% if user.profile.linkedin %}{{ user.profile.linkedin }}{% endif %}" placeholder="Profile URL" id="linkedin" name="linkedin">
+            </div>
             <span class="help-block"></span>
           </div>
           <div class="form-group">

@@ -109,7 +109,7 @@
             <tbody>
               {% for pub in publications %}
               <tr>
-                <td>{{ pub.title }}</td>
+                <td>{% if pub.link %}<a href="{{ pub.link }}" title="{{ pub.title }}" target="_blank">{% endif %}{{ pub.title }}{% if pub.link %}</a>{% endif %}</td>
                 <td>{{ pub.pubdate }}</td>
                 <td>{{ pub.get_pubtype_display|title }}</td>
                 <td>{% for a in pub.authors.all %}{% if not forloop.first %}, {% endif %}<a href="{{ a.profile.get_absolute_url }}">{{ a.profile.full_name }}</a>{% endfor %}</td>
