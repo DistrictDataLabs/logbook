@@ -20,7 +20,7 @@ Helper module for managing Logbook version information
 __version_info__ = {
     'major': 0,
     'minor': 2,
-    'micro': 5,
+    'micro': 6,
     'releaselevel': 'final',
     'serial': 0,
 }
