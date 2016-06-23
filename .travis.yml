@@ -20,7 +20,7 @@ env:
   global:
     - DJANGO_SETTINGS_MODULE=logbook.settings.testing
     - SECRET_KEY=supersecretkey
-    - DATABASE_URL=postgresql+psycopg2://localhost/logbook
+    - DATABASE_URL=postgresql://localhost/logbook
     - EMAIL_HOST_USER=''
     - EMAIL_HOST_PASSWORD=''
     - GOOGLE_OAUTH2_KEY=''
