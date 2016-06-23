@@ -57,7 +57,9 @@ def signature(text):
     completely lowercase. These signatures will help us discover textual
     similarities between questions.
     """
-    return base64.b64encode(hashlib.sha1(normalize(text)).digest())
+    text = normalize(text).encode('utf-8')
+    signed = base64.b64encode(hashlib.sha1(text).digest())
+    return signed.decode('utf-8')
 
 
 def htmlize(text):

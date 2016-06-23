@@ -18,10 +18,11 @@ Parses CSV activity logs as created by Tony and adds to the database.
 ##########################################################################
 
 import re
+import io
 import sys
+import csv
 import chardet
 import unicodedata
-import unicodecsv as csv
 
 from dateutil import parser
 from collections import Counter
@@ -43,8 +44,8 @@ EXPECTED_FIELDS = frozenset([
 ])
 
 PUNCTUATION     = dict.fromkeys(
-    idx for idx in xrange(sys.maxunicode)
-    if unicodedata.category(unichr(idx)).startswith('P') and unichr(idx) != u"-"
+    idx for idx in range(sys.maxunicode)
+    if unicodedata.category(chr(idx)).startswith('P') and chr(idx) != "-"
 )
 
 ##########################################################################
@@ -132,7 +133,13 @@ class ActivityParser(object):
         """
         Handle an individual CSV file and associated errors and counts.
         """
-        reader = csv.DictReader(data, encoding=detect_encoding(data))
+        # Encode the data and load into a file-like object
+        # TODO: Will this take up too much memory, or double it?
+        encoding = detect_encoding(data)
+        fobj = io.StringIO(data.read().decode(encoding))
+
+        # Create CSV reader and structures
+        reader = csv.DictReader(fobj)
         counts = Counter()
 
         # Check for missing expected fields
@@ -233,7 +240,7 @@ class ActivityParser(object):
                 created=row['ActionDate'],
             )
 
-            print 'Created course: {}'.format(course)
+            print('Created course: {}'.format(course))
             counts['Courses created from instructor records'] += 1
 
         # Find the role for the instructor
@@ -289,7 +296,7 @@ class ActivityParser(object):
 
         if created:
             counts['New publication added'] += 1
-            print "Created publication: {}".format(pub)
+            print("Created publication: {}".format(pub))
         else:
             counts['Duplicate publication detected'] += 1
 

@@ -272,6 +272,5 @@ REST_FRAMEWORK = {
 
 PUBLICATION_DOMAINS = frozenset((
     'districtdatalabs.silvrback.com',
-    'www.districtdatalabs.com',
-    'districtdatalabs.com',
+    'blog.districtdatalabs.com',
 ))
