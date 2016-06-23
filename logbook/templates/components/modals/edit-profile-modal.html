@@ -36,12 +36,12 @@
             <span class="help-block"></span>
           </div>
           <div class="form-group">
-            <label for="organization">Location</label>
+            <label for="location">Location</label>
             <input type="text" class="form-control" value="{% if user.profile.location %}{{ user.profile.location }}{% endif %}" placeholder="Location" id="location" name="location">
             <span class="help-block"></span>
           </div>
           <div class="form-group">
-            <label for="organization">Twitter</label>
+            <label for="twitter">Twitter</label>
             <div class="input-group">
               <span class="input-group-addon" id="twitter-addon1">@</span>
               <input type="text" class="form-control" value="{% if user.profile.twitter %}{{ user.profile.twitter }}{% endif %}" placeholder="Handle" id="twitter" name="twitter">
@@ -49,9 +49,17 @@
             <span class="help-block"></span>
           </div>
           <div class="form-group">
-            <label for="organization">linkedin</label>
+            <label for="github">GitHub</label>
             <div class="input-group">
-              <span class="input-group-addon" id="linked-addon1"><i class="fa fa-linkedin"></i></span>
+              <span class="input-group-addon" id="github-addon1"><i class="fa fa-github"></i></span>
+              <input type="text" class="form-control" value="{% if user.profile.github %}{{ user.profile.github }}{% endif %}" placeholder="Handle" id="github" name="github">
+            </div>
+            <span class="help-block"></span>
+          </div>
+          <div class="form-group">
+            <label for="linkedin">LinkedIn</label>
+            <div class="input-group">
+              <span class="input-group-addon" id="linkedin-addon1"><i class="fa fa-linkedin"></i></span>
               <input type="text" class="form-control" value="{% if user.profile.linkedin %}{{ user.profile.linkedin }}{% endif %}" placeholder="Profile URL" id="linkedin" name="linkedin">
             </div>
             <span class="help-block"></span>
