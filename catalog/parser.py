@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: parser.py [] benjamin@bengfort.com $
+# ID: parser.py [c0ba149] benjamin@bengfort.com $
 
 """
 Parses CSV activity logs as created by Tony and adds to the database.

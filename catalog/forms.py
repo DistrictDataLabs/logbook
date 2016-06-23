@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: forms.py [] benjamin@bengfort.com $
+# ID: forms.py [b52230a] benjamin@bengfort.com $
 
 """
 Forms and other HTML data handling from the web front end.

@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: models.py [] benjamin@bengfort.com $
+# ID: models.py [7072b57] benjamin@bengfort.com $
 
 """
 Models that define how we describe DDL events in the database.

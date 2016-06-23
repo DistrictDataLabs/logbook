@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: ingest.py [] benjamin@bengfort.com $
+# ID: ingest.py [751edd8] benjamin@bengfort.com $
 
 """
 Ingest utility to grab data from a CSV file and insert into database.

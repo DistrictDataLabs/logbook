@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: views.py [] benjamin@bengfort.com $
+# ID: views.py [a700ca8] benjamin@bengfort.com $
 
 """
 Views for the members app.

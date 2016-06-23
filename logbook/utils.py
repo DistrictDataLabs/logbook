@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: utils.py [] benjamin@bengfort.com $
+# ID: utils.py [7072b57] benjamin@bengfort.com $
 
 """
 Project level utilities and helpers

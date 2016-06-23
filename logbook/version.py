@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: version.py [] bbengfort@districtdatalabs.com $
+# ID: version.py [056df34] benjamin@bengfort.com $
 
 """
 Helper module for managing Logbook version information

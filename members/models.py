@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: models.py [] benjamin@bengfort.com $
+# ID: models.py [a700ca8] benjamin@bengfort.com $
 
 """
 Models that store information about faculty and students.

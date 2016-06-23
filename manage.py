@@ -8,7 +8,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: manage.py [] benjamin@bengfort.com $
+# ID: manage.py [6e3ca6b] benjamin@bengfort.com $
 
 """
 Django default management commands, with some special sauce.
