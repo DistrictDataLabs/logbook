@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: signals.py [] benjamin@bengfort.com $
+# ID: signals.py [7072b57] benjamin@bengfort.com $
 
 """
 Signals for handling model events in the catalog app.

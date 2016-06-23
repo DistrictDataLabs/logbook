@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: wsgi.py [] benjamin@bengfort.com $
+# ID: wsgi.py [6e3ca6b] benjamin@bengfort.com $
 
 """
 WSGI config for logbook project.

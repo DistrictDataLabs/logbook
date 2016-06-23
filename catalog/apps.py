@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: apps.py [] benjamin@bengfort.com $
+# ID: apps.py [7072b57] benjamin@bengfort.com $
 
 """
 Describes the Catalog application for Django

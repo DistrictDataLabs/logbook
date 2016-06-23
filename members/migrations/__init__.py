@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: __init__.py [] benjamin@bengfort.com $
+# ID: __init__.py [a700ca8] benjamin@bengfort.com $
 
 """
 The migrations for model changes to the Members app.

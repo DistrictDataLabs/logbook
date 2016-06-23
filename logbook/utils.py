@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: utils.py [] benjamin@bengfort.com $
+# ID: utils.py [7072b57] benjamin@bengfort.com $
 
 """
 Project level utilities and helpers
@@ -57,7 +57,9 @@ def signature(text):
     completely lowercase. These signatures will help us discover textual
     similarities between questions.
     """
-    return base64.b64encode(hashlib.sha1(normalize(text)).digest())
+    text = normalize(text).encode('utf-8')
+    signed = base64.b64encode(hashlib.sha1(text).digest())
+    return signed.decode('utf-8')
 
 
 def htmlize(text):

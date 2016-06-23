@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: models.py [] benjamin@bengfort.com $
+# ID: models.py [7072b57] benjamin@bengfort.com $
 
 """
 Models that define how we describe DDL events in the database.
@@ -59,7 +59,7 @@ class DDLEvent(TimeStampedModel):
         """
         raise NotImplementedError("DDL Events shoud have a page view!")
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -94,7 +94,7 @@ class Course(DDLEvent):
         """
         return reverse('course', kwargs={'slug': self.slug})
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} on {}".format(self.name, self.begins.strftime('%b %d, %Y'))
 
 
@@ -119,7 +119,7 @@ class Instructor(TimeStampedModel):
         get_latest_by   = 'created'
         unique_together = ('user', 'course', 'role')
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} teaching {}".format(self.user.profile.full_name, self.course)
 
 
@@ -146,7 +146,7 @@ class Enrollment(TimeStampedModel):
         ordering = ('-created',)
         get_latest_by   = 'created'
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} enrolled in {}".format(self.user.profile.full_name, self.course)
 
 
@@ -169,7 +169,7 @@ class Subscription(TimeStampedModel):
     class Meta:
         db_table = 'subscriptions'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class Publication(TimeStampedModel):
@@ -192,7 +192,7 @@ class Publication(TimeStampedModel):
         ordering = ('-pubdate', '-created')
         get_latest_by = 'pubdate'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     @property

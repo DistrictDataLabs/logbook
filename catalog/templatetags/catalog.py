@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: catalog.py [] benjamin@bengfort.com $
+# ID: catalog.py [e9af0f6] benjamin@bengfort.com $
 
 """
 Tags specific to the catalog library including Bootstrap helpers.

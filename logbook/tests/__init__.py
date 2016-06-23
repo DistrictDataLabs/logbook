@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: __init__.py [] benjamin@bengfort.com $
+# ID: __init__.py [5fc98c5] benjamin@bengfort.com $
 
 """
 Testing package for the DDL Logobook project.

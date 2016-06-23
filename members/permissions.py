@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: permissions.py [] benjamin@bengfort.com $
+# ID: permissions.py [ccbeb30] benjamin@bengfort.com $
 
 """
 Extra permissions for the Django Rest Framework views.

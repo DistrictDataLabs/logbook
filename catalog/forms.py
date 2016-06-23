@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: forms.py [] benjamin@bengfort.com $
+# ID: forms.py [b52230a] benjamin@bengfort.com $
 
 """
 Forms and other HTML data handling from the web front end.
@@ -21,9 +21,9 @@ import requests
 
 from django import forms
 from bs4 import BeautifulSoup
-from urlparse import urlparse
 from datetime import datetime
 from django.conf import settings
+from urllib.parse import urlparse
 from autoslug.settings import slugify
 from catalog.parser import slugify as username_slugify
 from django.contrib.auth.models import User

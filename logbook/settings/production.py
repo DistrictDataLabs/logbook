@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: production.py [] bbengfort@districtdatalabs.com $
+# ID: production.py [6e3ca6b] benjamin@bengfort.com $
 
 """
 The Django settings for LogBook in Production

@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: base.py [] bbengfort@districtdatalabs.com $
+# ID: base.py [6e3ca6b] benjamin@bengfort.com $
 
 """
 Django settings for LogBook project.
@@ -272,6 +272,5 @@ REST_FRAMEWORK = {
 
 PUBLICATION_DOMAINS = frozenset((
     'districtdatalabs.silvrback.com',
-    'www.districtdatalabs.com',
-    'districtdatalabs.com',
+    'blog.districtdatalabs.com',
 ))

@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: models.py [] benjamin@bengfort.com $
+# ID: models.py [a700ca8] benjamin@bengfort.com $
 
 """
 Models that store information about faculty and students.
@@ -17,13 +17,13 @@ Models that store information about faculty and students.
 ## Imports
 ##########################################################################
 
-import urllib
 
 from django.db import models
 from model_utils import Choices
 from django.conf import settings
 from logbook.utils import nullable
 from autoslug import AutoSlugField
+from urllib.parse import urlencode
 from model_utils.models import TimeStampedModel
 from markupfield.fields import MarkupField
 from django.core.urlresolvers import reverse
@@ -51,7 +51,7 @@ class Role(TimeStampedModel):
         db_table = 'roles'
         get_latest_by = 'created'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -72,7 +72,7 @@ class Membership(TimeStampedModel):
         db_table = 'membership'
         get_latest_by = 'created'
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} role of {}".format(self.role, self.profile)
 
 ##########################################################################
@@ -123,7 +123,7 @@ class Profile(TimeStampedModel):
         """
         size    = size or settings.GRAVATAR_DEFAULT_SIZE
         default = default or settings.GRAVATAR_DEFAULT_IMAGE
-        params  = urllib.urlencode({'d': default, 's': str(size)})
+        params  = urlencode({'d': default, 's': str(size)})
 
         return "http://www.gravatar.com/avatar/{}?{}".format(
             self.email_hash, params
@@ -141,5 +141,5 @@ class Profile(TimeStampedModel):
         """
         return reverse('member-detail', args=(self.user.username,))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.full_email

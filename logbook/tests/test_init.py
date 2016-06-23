@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: test_init.py [] benjamin@bengfort.com $
+# ID: test_init.py [5fc98c5] benjamin@bengfort.com $
 
 """
 Sanity checking for testing purposes.

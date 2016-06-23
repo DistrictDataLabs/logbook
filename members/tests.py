@@ -7,7 +7,7 @@
 # Copyright (C) 2015 District Data Labs
 # For license information, see LICENSE.txt
 #
-# ID: tests.py [] benjamin@bengfort.com $
+# ID: tests.py [a700ca8] benjamin@bengfort.com $
 
 """
 Testing for the members app.
@@ -60,10 +60,18 @@ fixtures = {
     }
 }
 
+
+##########################################################################
+## Helper Functions
+##########################################################################
+
+def md5hash(text):
+    return hashlib.md5(text.encode('utf-8')).hexdigest()
+
+
 ##########################################################################
 ## Model Tests
 ##########################################################################
-
 
 class ProfileModelTest(TestCase):
 
@@ -86,8 +94,8 @@ class ProfileModelTest(TestCase):
         """
 
         email   = "Jane.Doe@gmail.com"
-        udigest = hashlib.md5(email).hexdigest()
-        ldigest = hashlib.md5(email.lower()).hexdigest()
+        udigest = md5hash(email)
+        ldigest = md5hash(email.lower())
 
         u = User.objects.create_user(username="test", email=email, password="password")
         self.assertIsNotNone(u.profile, "user has no profile?")
@@ -101,7 +109,7 @@ class ProfileModelTest(TestCase):
         Email should be hashed on user create
         """
 
-        digest = hashlib.md5(fixtures['user']['email']).hexdigest()
+        digest = md5hash(fixtures['user']['email'])
 
         self.assertIsNotNone(self.user.profile, "user has no profile?")
         self.assertIsNotNone(self.user.profile.email_hash, "user has no email hash?")
@@ -113,7 +121,7 @@ class ProfileModelTest(TestCase):
         """
 
         newemail = "john.doe@gmail.com"
-        digest   = hashlib.md5(newemail).hexdigest()
+        digest   = md5hash(newemail)
 
         self.user.email = newemail
         self.user.save()
