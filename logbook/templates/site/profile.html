@@ -52,6 +52,16 @@
               <span id="profileTwitter">Not Added</span>
               {% endif %}
           </li>
+          <li id="userGithub">
+              <i class="fa fa-github"></i>
+              {% if user.profile.github %}
+              <a id="profileGithubA" href="https://github.com/{{ user.profile.github }}/" target="_blank">
+                <span id="profileGithub">{{ user.profile.github }}</span>
+              </a>
+              {% else %}
+              <span id="profileGithub">Not Added</span>
+              {% endif %}
+          </li>
           <li id="userLinkedIn">
               <i class="fa fa-linkedin"></i>
               {% if user.profile.linkedin %}
@@ -290,6 +300,7 @@
                     "organization": data.organization,
                     "location": data.location,
                     "twitter": data.twitter,
+                    "github": data.github,
                     "linkedin": data.linkedin
                 };
 
@@ -297,6 +308,7 @@
                 delete data.organization;
                 delete data.location;
                 delete data.twitter;
+                delete data.github;
                 delete data.linkedin;
 
                 $.ajax({
@@ -313,6 +325,8 @@
                     $("#profileLocation").text(data.profile.location);
                     $("#profileTwitter").text("@" + data.profile.twitter);
                     $("#profileTwitterA").attr("href", "https://twitter.com/" + data.profile.twitter + "/");
+                    $("#profileGithub").text(data.profile.github);
+                    $("#profileGithubA").attr("href", "https://github.com/" + data.profile.github + "/");
                     $("#profileLinkedIn").text(data.last_name + " Profile");
                     $("#profileLinkedInA").attr("href", data.profile.linkedin);
                     $("#editProfileModal").modal("hide");
